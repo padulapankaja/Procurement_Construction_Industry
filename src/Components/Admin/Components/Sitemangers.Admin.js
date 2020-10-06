@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
 import ADMIN from '../../Controller/Admin.controller'
-
+import moment from 'moment'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faPenAlt, faEye, faEnvelope , faBan} from '@fortawesome/free-solid-svg-icons'
 
 class SiteManagersAdmin extends Component {
     constructor() {
@@ -135,6 +137,20 @@ class SiteManagersAdmin extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <tr >
+
+                                                    <td><b>Saman Kumar</b></td>
+                                                    <td>samankumara@gmail.com</td>
+                                                    <td>{moment(new Date("2020-05-06")).format('YYYY MMM DD')}</td>
+                                                    <td>
+                                                        <button className="btn btn-danger btn-sm px-2 mr-2">
+                                                            <FontAwesomeIcon icon={faBan} />
+                                                        </button>
+                                                        <a className="btn btn-info btn-sm px-2 mr-2" href={`mailto:samankumara@gmail.com`}  >
+                                                            <FontAwesomeIcon icon={faEnvelope} />
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                                 {/* {managers.map(item => this.displayAllManagers(item))} */}
                                             </tbody>
                                         </table>
