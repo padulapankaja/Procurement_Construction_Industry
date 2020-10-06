@@ -1,0 +1,155 @@
+.sidebar_wrap {
+    background: #393f46;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 10;
+    overflow: hidden;
+    -webkit-transition: width 0.8s ease-in-out;
+    -moz-transition: width 0.8s ease-in-out;
+    -o-transition: width 0.8s ease-in-out;
+    transition: width 0.8s ease-in-out;
+    width : 245px;
+
+}
+
+.sidebar-top {
+    padding-top: 3.5rem !important;
+}
+
+ul.sidebar {
+    list-style-type: none;
+}
+.click{
+    cursor: pointer;
+}
+
+.active_category {
+    color: white !important;
+    background-color: #323941 !important;
+}
+.topnav{
+    z-index: 12;
+}
+
+.categorylink {
+    color: #c9cbcc;
+    cursor: pointer;
+    width: 100%;
+    
+}
+.listitem{
+    background-color: #32394188;
+    padding : 14px 0px;
+    border-bottom: 1px solid #464d551f;
+}
+.listitem:hover{
+    background-color: #323941;
+}
+
+.sidebar-image{
+    width: 45px;
+    height: 45px;
+    margin-right: 15px;
+}
+
+.wrapper-wx{
+    padding-left: 245px;
+    -webkit-transition: padding 0.8s ease-in-out;
+    -moz-transition: padding 0.8s ease-in-out;
+    -o-transition: padding 0.8s ease-in-out;
+    transition: padding 0.8s ease-in-out;
+}
+.sidebar-icon{
+    font-size: 16px;
+}
+
+.bold-normal{
+    font-weight: 600;
+}
+
+.filepond--root .filepond--image-preview {
+    background: #ffffff !important;
+}
+
+.filepond--image-preview-overlay-idle {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.filepond--image-preview-overlay-success {
+    color: rgb(54, 151, 99);
+}
+
+.filepond--image-preview-overlay-failure {
+    color: rgb(196, 78, 71);
+}
+.filepond--root,
+.filepond--root .filepond--drop-label {
+  min-height: 160px;
+  background-color: #F1F0EF !important;
+}
+
+.filepond--panel{
+    background-color: unset ;
+}
+
+.ck-editor .ck-editor__editable_inline {min-height: 140px !important;}
+
+.form-label{
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-label-table{
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.categorylink:hover {
+    color: #F4F4F4 !important;
+}
+.wd-wrapper{
+    padding-top: 2.5rem !important;
+    width: 100% !important;
+    height: 100vh !important;
+}
+
+.img-wrap {
+    position: relative;
+}
+.close-btn{
+    position: absolute;
+    bottom : 5px;
+    cursor: pointer;
+    left: 5px;
+}
+
+.sidebar_active {
+    width: 245px !important;
+}
+
+.react-confirm-alert-overlay{
+    background: rgba(0, 0, 9, 0.1) !important;
+}
+
+  .show-icon{
+      display: none;
+  }
+
+@media only screen and (max-width: 1150px) {
+    .sidebar_wrap {
+      width: 0px;
+    }
+
+    .wrapper-wx{
+        padding-left: 15px;
+    }
+
+    .show-icon{
+        display: inline-block;
+    }
+  
+  }
+
+
