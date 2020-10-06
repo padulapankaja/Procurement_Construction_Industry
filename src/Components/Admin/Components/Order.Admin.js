@@ -3,6 +3,7 @@ import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
 import ADMIN from '../../Controller/Admin.controller'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
 
@@ -104,19 +105,21 @@ class OrderAdmin extends Component {
                                                 <tr>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">No.Items</th>
-                                                    <th scope="col">Site</th>
+                                                    <th scope="col">Site Location</th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr >
-                                                    <td><b>Ravi Jay</b></td>
-                                                    <td>ravijay@gmail.com</td>
+                                                <tr>
                                                     <td>{moment(new Date("2020-10-06")).format('YYYY MMM DD')}</td>
+                                                    <td>05</td>
+                                                    <td>Galle - Main Street(GL05)</td>
                                                     <td>
+                                                        <Link to="/admin/orders/1">
                                                         <button className="btn btn-success btn-sm px-2 mr-2">
                                                             <FontAwesomeIcon icon={faEye} />
                                                         </button>
+                                                        </Link>
                                                         {/* <a className="btn btn-info btn-sm px-2 mr-2" href={`mailto:samankumara@gmail.com`}  >
                                                             <FontAwesomeIcon icon={faEnvelope} />
                                                         </a> */}
@@ -126,6 +129,7 @@ class OrderAdmin extends Component {
                                         </table>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

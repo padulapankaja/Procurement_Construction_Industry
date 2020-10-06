@@ -1,0 +1,12 @@
+.no_border_text:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+.no_border_text :hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+.no_border_text :active {
+  border: none !important;
+  box-shadow:  none !important;
+}

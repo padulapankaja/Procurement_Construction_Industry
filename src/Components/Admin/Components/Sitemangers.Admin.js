@@ -104,6 +104,26 @@ class SiteManagersAdmin extends Component {
                                                     name="password"
                                                     placeholder="Automaticaly Generate and Email"
                                                     className="form-control" disabled></input>
+                                            </div>  
+                                            <div className="col-md-6">
+                                            <h6 className="form-label py-2 ">Site Location *</h6>
+                                                <input
+                                                    type="text"
+                                                    name="contactNumber"
+                                                    placeholder="Galle - Main Street"
+                                                    value={contactNumber}
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+
+                                            </div>
+                                            <div className="col-md-6">
+                                            <h6 className="form-label py-2 ">Site Code *</h6>
+                                                <input
+                                                    type="text"
+                                                    name="contactNumber"
+                                                    placeholder="GL0156"
+                                                    value={contactNumber}
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+
                                             </div>
                                             <div className="col-md-12 mt-4">
                                                 <div className="d-flex">
