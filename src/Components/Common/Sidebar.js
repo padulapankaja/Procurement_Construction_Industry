@@ -1,10 +1,12 @@
 /*  eslint-disable */
 import React from "react";
-// import { SignOut } from "../actions/authActions";
 import "../asserts/sidebar.css";
 import { Link, withRouter } from "react-router-dom";
-// import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { connect } from "react-redux";
+import { SignOut } from "../Redux/Action/authAction";
+
+
 import {
     faUser,
     faEnvelopeSquare,
@@ -21,6 +23,7 @@ import {
     faUsers,
     faSuitcase,
     faSignOutAlt,
+    faIgloo
 } from "@fortawesome/free-solid-svg-icons";
 
 class AdminSidebar extends React.Component {
@@ -32,18 +35,27 @@ class AdminSidebar extends React.Component {
     }
 
     signoutuser = () => {
-        alert('Log Out')
-        // const role = this.props.auth.user.type;
-        // const isadmin = (role && role == "admin") ? true : false
-        // this.props.SignOut && this.props.SignOut();
-        // this.props.history.push(isadmin ? "/admin" : "/manager");
+
+        const role = this.props.auth.user.role;
+        const isadmin = (role && (role == 3 || role == 1 || role == 2 || role == 0)) ? true : false
+        this.props.SignOut && this.props.SignOut();
+        this.props.history.push(isadmin ? "/" : "/");
     };
 
     render() {
         const { side_bar_toggle } = this.state;
         // const { active } = 'dashboard';
         const { active } = this.props;
-        // const role = this.props.auth.user.type;
+        const role = this.props.auth.user.role;
+        var role_name = "";
+        if (role == 1)
+            role_name = "Site Manager"
+        else if (role == 2)
+            role_name = "Accountant"
+        else if (role == 3)
+            role_name = "Management"
+        else if (role == 0)
+            role_name = "supplier"
         // const isadmin = (role && role == "admin") ? true : false
         return (
             <>
@@ -58,13 +70,12 @@ class AdminSidebar extends React.Component {
                             <div className="my-auto">
                                 <h6 style={{ lineHeight: '12px', fontWeight: 600 }}
                                     className={`text-white mb-0 mt-1`}>
-                                    Admin
-                                        {/* {role && role.length > 1 && 
+                                    {role_name}
+                                    {/* {role && role.length > 1 && 
                                     role[0].toUpperCase() + role.substring(1)}  */}
                                 </h6>
                                 <span className="small text-light ">
-                                    padula@gmail.com
-                                    {/* {this.props.auth.user.email} */}
+                                    {this.props.auth.user.email}
                                 </span>
                             </div>
                         </div>
@@ -108,4 +119,12 @@ class AdminSidebar extends React.Component {
         );
     }
 }
-export default (AdminSidebar);
+
+const mapStateToProps = (state) => ({
+    auth: state.auth || {},
+});
+
+const mapDispatchToProps = {
+    SignOut,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminSidebar));

@@ -4,7 +4,7 @@ import Axios from 'axios'
 class Common {
     constructor() {
         this.api = {
-            signin: "/api/sign",
+            signin: "/api/users/signin",
         };
     }
     // sign in
