@@ -108,6 +108,13 @@ class AdminSidebar extends React.Component {
                                 </h6>
                             </li>
                         </Link>
+                        <Link to="/admin/items">
+                            <li className={`listitem ${active == 'items' && 'active_category'}`}>
+                                <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
+                                    <FontAwesomeIcon icon={faPlusSquare} className="mx-3 sidebar-icon"></FontAwesomeIcon>Items
+                                </h6>
+                            </li>
+                        </Link>
                         <li onClick={() => this.signoutuser()} className={`listitem click`}>
                             <h6 className={`categorylink px-2 `}>
                                 <FontAwesomeIcon icon={faSignOutAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Logout
