@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
-// import ADMIN from '../../Controller/Admin.controller'
 import {get_all_suppliers, insertItem , get_all_items , deleteItem } from '../../Controller/Items.controller'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,24 +19,25 @@ class ItemsAdmin extends Component {
             description:'',
             item_name:'',
             price:'',
+            supplierName:{},
         };
     }
 
     async componentDidMount() {
-        // this.load_data();
+        this.load_data();
         this.load_items_data();
         
     }
 
-    // load_data = async () => {
-    //     get_all_suppliers().then( results => {
-    //         this.setState({supplierList: results});
-    //         console.log("Supplier data",results);
-    //     }
-    //     ).catch( err=> {
-    //         console.log(err);
-    //     })
-    // }
+    load_data = async () => {
+        get_all_suppliers().then( results => {
+            this.setState({supplierList: results.data.data});
+            console.log("Supplier data",results.data.data);
+        }
+        ).catch( err=> {
+            console.log(err);
+        })
+    }
 
     load_items_data = async () => {
         get_all_items().then( results => {
@@ -80,9 +80,10 @@ class ItemsAdmin extends Component {
             item_name: this.state.item_name,
             description: this.state.description,
             price: this.state.price,
+            supplierName:this.state.supplier,
             password: Config.password,
         }
-        // console.log(data);
+        console.log(data);
         // alert(JSON.stringify(data))
 
         insertItem(data).then( result => {
@@ -148,11 +149,12 @@ class ItemsAdmin extends Component {
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
 
-                                                    {/* <h6 className="form-label py-2">Supplier *</h6>
-                                                        <select value={supplier.id} onChange={this.handleSelect} className="form-control">
-                                                        <option value="">Select Category</option>
+                                                    <h6 className="form-label py-2">Supplier *</h6>
+                                                        <select value={supplier.name} onChange={this.handleSelect}  className="form-control">
+                                                        <option value="">Select a Supplier</option>
+                                                    
                                                         {supplierList.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
-                                                        </select> */}
+                                                        </select>
                                                
                                             </div>
                                             <div className="col-md-6">
@@ -233,6 +235,7 @@ class ItemsAdmin extends Component {
             </div>
         );
     }
+
     renderAllItems = (item) => {
         return (
             <tr key={item._id}>
@@ -246,7 +249,17 @@ class ItemsAdmin extends Component {
             </td>
         </tr>
         );
-      };
+    };
+
+    renderSessions = () => {
+        return [ 
+        ...this.state.lectList.map( item => {
+            return {
+                label : `${item.name}`,
+                value : item.name 
+            }
+        })]
+    }
 
 
     deleteItem = item => {
