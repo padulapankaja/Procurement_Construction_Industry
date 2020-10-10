@@ -55,6 +55,7 @@ export const get_all_suppliers = () => {
 
 //delete an item
 export const deleteItem = (id) => {
+    console.log("id eka mekada balanna", id);
     return new Promise((resolve, reject) => {
       return axios
         .delete(`${Config.host}${Config.port}/api/items/delete/${id}`)

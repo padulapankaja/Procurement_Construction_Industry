@@ -264,16 +264,29 @@ class ItemsAdmin extends Component {
 
     deleteItem = item => {
         const id = item._id;
-        Config.setDeleteConfirmAlert('Delete' , 'Are you sure you want to delete this ? ' , 
-        () => this.deleted(item._id),
-        () => console.log('cancel'))
+        deleteItem(id).then( result => {
+            if(result.status == 200 ){
+                Config.setToast("Item Deleted Successfully");
+                this.load_items_data();
+                
+            }else{
+                Config.setToast(result.message);
+            }
+        })
+        .catch( error => {
+            console.log(error);
+            Config.setErrorToast('Something Wrong Happend!');
+        })
+        // Config.setDeleteConfirmAlert('Delete' , 'Are you sure you want to delete this ? ' , 
+        // () => this.deleted(item._id),
+        // () => console.log('cancel'))
     }
   
     deleted = async (id) => {
         deleteItem(id).then( result => {
             if(result.status == 200 ){
                 Config.setToast("Item Deleted Successfully");
-                this.load_items_datav();
+                this.load_items_data();
                 
             }else{
                 Config.setToast(result.message);
