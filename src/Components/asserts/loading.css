@@ -1,0 +1,16 @@
+.IS_Loader{
+    position: fixed ;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: #d1d1d1e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.IS_Loader img{
+    opacity: .8;
+}
