@@ -13,20 +13,19 @@ class Sites extends Component {
         super();
         this.state = {
             addManagerState: false,
-            name: '',
-            contactNumber: '',
-            email: '',
-            site_location: '',
+            address: '',
             site_code: '',
-            password: Config.password,
-            site_managers_arry: [],
+            site_manager: '',
             loading: true,
+            site_managers_arry: [],
         };
         this.get_all_site_managers()
+        this.get_all_sites()
 
-        
+
     }
     formValueChange = (e) => {
+        console.log(e.target.value);
         this.setState({ [e.target.name]: e.target.value })
     }
 
@@ -40,61 +39,73 @@ class Sites extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault()
+        if (this.state.site_manager == "" | this.state.site_manager == null) {
+            return Config.setErrorToast("Someting went wrong")
+        }
         var data = {
-            username: this.state.name,
-            contact_number: this.state.contactNumber,
-            email: this.state.email,
-            password: Config.password,
+            address: this.state.address,
             site_code: this.state.site_code,
-            site_location: this.state.site_location,
-            role: 1
+            site_manager: this.state.site_manager,
         }
-        console.log(data);
-        // alert(JSON.stringify(data))
-        const result = await ADMIN.register_site_manager(data)
-        await console.log(result);
-        if (result.code == 200) {
+        ADMIN.add_site(data).then(result => {
+            console.log(result);
             Config.setToast("Successfully Registed")
-            this.props.history.push("/admin/sitemanagers");
-        } else {
+            this.props.history.push("/admin/sites");
+        }).catch(err => {
+            console.log(err);
             Config.setErrorToast("Someting went wrong")
-            this.props.history.push("/admin/sitemanagers");
-        }
-    }
+            this.props.history.push("/admin/sites");
+        })
 
+    }
     clear = () => {
         this.setState({
-            name: '',
-            contactNumber: '',
-            email: '',
+            address: '',
             site_code: '',
-            site_location: '',
-            password: Config.password,
         })
     }
     get_all_site_managers = async () => {
         const res = await ADMIN.get_all_site_managers()
         console.log(res);
-        this.setState({
-            site_managers_arry: res.data.data
+        await this.setState({
+            site_managers_arry: res.data.data,
         })
-      await  this.setState({
+        await this.renderOptions()
+        await this.setState({
             loading: false,
+
         });
     }
+
+    get_all_sites = () => {
+        ADMIN.get_all_sites().then(result => {
+            this.setState({
+                all_sites: result.data.data
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    renderOptions() {
+
+        return this.state.site_managers_arry.filter(user => user.site_code == "").map((dt, i) => {
+            return (<option className="form-control" value={dt._id}> {dt.username}</option>)
+        });
+    }
+
     render() {
-        const { name, contactNumber, email, site_code, site_location } = this.state
+        const { address, site_code, site_manager } = this.state
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"sitemanagers"} />
 
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
-                    <Loader show={this.state.loading} />
+                        <Loader show={this.state.loading} />
                         <div className="row">
                             <div className="col-12">
                                 <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    Site Managers Managment
+                                    Site  Managment
                                 <span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Site</span>
                                 </h5>
                             </div>
@@ -103,55 +114,30 @@ class Sites extends Component {
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2">Name *</h6>
+                                                <h6 className="form-label py-2">Address *</h6>
                                                 <input
                                                     type="text"
-                                                    name="name"
-                                                    placeholder="John"
-                                                    value={name}
+                                                    name="address"
+                                                    placeholder="Gall - Main Street"
+                                                    value={address}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-
-                                                <h6 className="form-label py-2 mt-2">Email *</h6>
-                                                <input
-                                                    type="email"
-                                                    name="email"
-                                                    placeholder="johndoe@gmail.com"
-                                                    value={email}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Contact Number *</h6>
-                                                <input
-                                                    type="number"
-                                                    name="contactNumber"
-                                                    placeholder="07XXXXXXXX"
-                                                    value={contactNumber}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                                <h6 className="form-label py-2 mt-2">Password  *</h6>
-                                                <input
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder="Automaticaly Generate and Email"
-                                                    className="form-control" disabled></input>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Site Location *</h6>
-                                                <input
-                                                    type="text"
-                                                    name="site_location"
-                                                    placeholder="Galle - Main Street"
-                                                    value={site_location}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Site Code *</h6>
+                                                <h6 className="form-label py-2 mt-2">Site Code *</h6>
                                                 <input
                                                     type="text"
                                                     name="site_code"
-                                                    placeholder="GL0156"
+                                                    placeholder="GL152"
                                                     value={site_code}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-
+                                            </div>
+                                            <div className="col-md-6">
+                                                <h6 className="form-label py-2">Site Manager *</h6>
+                                                <select
+                                                    name="site_manager"
+                                                    value={site_manager}
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required>
+                                                    <option className="form-control" value=""> Select Site Manager</option>
+                                                    {this.renderOptions()}
+                                                </select>
                                             </div>
                                             <div className="col-md-12 mt-4">
                                                 <div className="d-flex">
@@ -171,21 +157,19 @@ class Sites extends Component {
                             <div className="col-12">
                                 <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
                                     <h5 className="text-dark bold-normal py-2 bg-white px-2">
-                                        All Sites 
+                                        All Sites
                                 </h5>
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Join Date</th>
                                                     <th scope="col">Site Code</th>
-                                                    <th scope="col">Actions</th>
+                                                    <th scope="col">Site Addreess</th>
+                                                    <th scope="col">Site Manager</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {this.state.site_managers_arry && this.state.site_managers_arry.map(item => this.display_all_site_managers(item))}
+                                                {this.state.all_sites && this.state.all_sites.map(item => this.display_all_site_managers(item))}
                                             </tbody>
                                         </table>
                                     </div>
@@ -198,20 +182,12 @@ class Sites extends Component {
         );
     }
     display_all_site_managers = data_arry => {
+        console.log(this.state.all_sites);
         return (
             <tr key={data_arry._id}>
-                <td> {data_arry.username}</td>
-                <td> {data_arry.email}</td>
-                <td> {data_arry.contact_number}</td>
                 <td> {data_arry.site_code}</td>
-                <td>
-                    <button className="btn btn-success btn-sm px-2 mr-2">
-                        <FontAwesomeIcon icon={faEye} />
-                    </button>
-                    <a className="btn btn-info btn-sm px-2 mr-2" href={`mailto:${data_arry.email}`}  >
-                        <FontAwesomeIcon icon={faEnvelope} />
-                    </a>
-                </td>
+                <td> {data_arry.address}</td>
+                <td> {data_arry.site_manager.username}</td>
             </tr>
         );
     }

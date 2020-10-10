@@ -23,11 +23,8 @@ class SiteManagersAdmin extends Component {
             loading: true,
             viewUser: '',
             showUserModal: false,
-
         };
         this.get_all_site_managers()
-
-
     }
     formValueChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
@@ -52,17 +49,20 @@ class SiteManagersAdmin extends Component {
             site_location: this.state.site_location,
             role: 1
         }
-        console.log(data);
-        // alert(JSON.stringify(data))
-        const result = await ADMIN.register_site_manager(data)
-        await console.log(result);
-        if (result.code == 200) {
+        ADMIN.register_site_manager(data).then(result => {
             Config.setToast("Successfully Registed")
+            this.get_all_site_managers()
+            this.clear()
+            this.setState({
+                addManagerState: false
+            })
             this.props.history.push("/admin/sitemanagers");
-        } else {
+        }).catch(err => {
+            console.log(err.code);
             Config.setErrorToast("Someting went wrong")
             this.props.history.push("/admin/sitemanagers");
-        }
+        })
+
     }
 
     clear = () => {
@@ -146,22 +146,22 @@ class SiteManagersAdmin extends Component {
                                                     className="form-control" disabled></input>
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Site Location *</h6>
-                                                <input
+                                                {/* <h6 className="form-label py-2 ">Site Location *</h6> */}
+                                                <input 
                                                     type="text"
                                                     name="site_location"
                                                     placeholder="Galle - Main Street"
                                                     value={site_location}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} hidden></input>
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Site Code *</h6>
+                                                {/* <h6 className="form-label py-2 ">Site Code *</h6> */}
                                                 <input
                                                     type="text"
                                                     name="site_code"
                                                     placeholder="GL0156"
                                                     value={site_code}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} hidden></input>
 
                                             </div>
                                             <div className="col-md-12 mt-4">
@@ -257,7 +257,8 @@ class SiteManagersAdmin extends Component {
                 <td> {data_arry.username}</td>
                 <td> {data_arry.email}</td>
                 <td> {data_arry.contact_number}</td>
-                <td> {data_arry.site_code}</td>
+                { data_arry.site_code != "" ? <td> {data_arry.site_code} </td> :<td> <span className="badge badge-warning">Not Assign</span>  </td> }
+                
                 <td>
                     <button className="btn btn-success btn-sm px-2 mr-2" onClick={() => this.showViewUser(data_arry._id)}>
                         <FontAwesomeIcon icon={faEye} />
