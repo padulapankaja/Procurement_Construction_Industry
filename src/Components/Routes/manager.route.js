@@ -44,6 +44,8 @@ let indexRoutes = [
     name: "SitesManagment",
     component: SitesManagment,
     exact: true,
+  },
+  {
     path: "/admin/items",
     name: "ItemsManagement",
     component: ItemsManagement,
