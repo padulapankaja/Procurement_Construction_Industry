@@ -87,6 +87,15 @@ class SupliersAdmin extends Component {
                                                     placeholder="johndoe@gmail.com"
                                                     value={email}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+
+                                                <h6 className="form-label py-2 mt-2">Address *</h6>
+                                                <input
+                                                    type="text"
+                                                    name="address"
+                                                    placeholder="156/4 , Rahula RD , Galle"
+                                                    //value={email}
+                                                    className="form-control" 
+                                                    onChange={(e) => this.formValueChange(e)} required></input>
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label py-2 ">Contact Number *</h6>
@@ -131,6 +140,7 @@ class SupliersAdmin extends Component {
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Join Date</th>
+                                                    <th scope="col">Address</th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                             </thead>
@@ -140,6 +150,7 @@ class SupliersAdmin extends Component {
                                                     <td><b>Ravi Jay</b></td>
                                                     <td>ravijay@gmail.com</td>
                                                     <td>{moment(new Date("2020-10-06")).format('YYYY MMM DD')}</td>
+                                                    <td>186/5 , Avenue place, Colombo 07</td>
                                                     <td>
                                                         <button className="btn btn-danger btn-sm px-2 mr-2">
                                                             <FontAwesomeIcon icon={faBan} />

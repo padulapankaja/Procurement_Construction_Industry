@@ -23,7 +23,9 @@ import {
     faUsers,
     faSuitcase,
     faSignOutAlt,
-    faIgloo
+    faIgloo,
+    faTimes,
+    faSitemap
 } from "@fortawesome/free-solid-svg-icons";
 
 class AdminSidebar extends React.Component {
@@ -118,7 +120,14 @@ class AdminSidebar extends React.Component {
                         <Link to="/admin/items">
                             <li className={`listitem ${active == 'items' && 'active_category'}`}>
                                 <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faPlusSquare} className="mx-3 sidebar-icon"></FontAwesomeIcon>Items
+                                    <FontAwesomeIcon icon={faTimes} className="mx-3 sidebar-icon"></FontAwesomeIcon>Items List
+                                </h6>
+                            </li>
+                        </Link>
+                        <Link to="/admin/AddItem">
+                            <li className={`listitem ${active == 'items' && 'active_category'}`}>
+                                <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
+                                    <FontAwesomeIcon icon={faBarcode} className="mx-3 sidebar-icon"></FontAwesomeIcon>Add Items
                                 </h6>
                             </li>
                         </Link>
