@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import { SignOut } from "../Redux/Action/authAction";
 
-
 import {
     faUser,
     faEnvelopeSquare,
@@ -25,7 +24,9 @@ import {
     faSignOutAlt,
     faIgloo,
     faTimes,
-    faSitemap
+    faSitemap,
+    faPlus,
+    faSort
 } from "@fortawesome/free-solid-svg-icons";
 
 class AdminSidebar extends React.Component {
@@ -33,6 +34,7 @@ class AdminSidebar extends React.Component {
         super(props);
         this.state = {
             side_bar_toggle: false,
+            addSuplierState: false,
         };
     }
 
@@ -43,6 +45,14 @@ class AdminSidebar extends React.Component {
         this.props.SignOut && this.props.SignOut();
         this.props.history.push(isadmin ? "/" : "/");
     };
+
+    change_toggle = () => {
+        if (this.state.addSuplierState) {
+            this.setState({ addSuplierState: false })
+        } else {
+            this.setState({ addSuplierState: true })
+        }
+    }
 
     render() {
         const { side_bar_toggle } = this.state;
@@ -90,12 +100,20 @@ class AdminSidebar extends React.Component {
                                 </h6></Link>
                         </li>
 
-                        <li className="listitem" className={`listitem ${active == 'sitemanagers' && 'active_category'}`}>
+                        <li className="listitem" className={`listitem ${active == 'userManagement' && 'active_category'}`}>
                             <Link to="/admin/sitemanagers">
                                 <h6 className="categorylink px-2">
-                                    <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>Site Managers
+                                    <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>User Management
                                 </h6></Link>
                         </li>
+                        <Link to="/admin/createUser">
+                            <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
+                                <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
+                                    <FontAwesomeIcon icon={faPlus} className="mx-3 sidebar-icon"></FontAwesomeIcon>Create User
+                                </h6>
+                            </li>
+                        </Link>
+               
                         <Link to="/admin/suppliers">
                             <li className={`listitem ${active == 'suppliers' && 'active_category'}`}>
                                 <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
@@ -103,6 +121,33 @@ class AdminSidebar extends React.Component {
                                 </h6>
                             </li>
                         </Link>
+                        
+                            <li className={`listitem ${active == 'createUser' && 'active_category'}`} onClick={() => this.change_toggle()}>
+                                <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
+                                    <FontAwesomeIcon icon={faSitemap} className="mx-3 sidebar-icon"></FontAwesomeIcon>Purchase Requests<FontAwesomeIcon icon={faSort} className="mx-2"></FontAwesomeIcon>
+                                    <ul className="sidebar" style={{ display: this.state.addSuplierState == true ? 'block' : 'none' }}>
+                                        <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
+                                            <Link to="/admin/createUser">
+                                            <h6 className={`categorylink py-2 mt-1 ml-5  ${active == 'createUser' && 'active_category'}`}>
+                                                Pending PR
+                                            </h6>
+                                            </Link>
+                                            <Link to="/admin/suppliers">
+                                            <h6 className={`categorylink py-2 mt-2 ml-5  ${active == 'createUser' && 'active_category'}`}>
+                                                Approved PR
+                                            </h6>
+                                            </Link>
+                                            <Link to="/admin/sites">
+                                            <h6 className={`categorylink py-2 mt-2 ml-5  ${active == 'createUser' && 'active_category'}`}>
+                                               Rejected PR
+                                            </h6>
+                                            </Link>
+                                        </li>
+                                      
+                                    </ul>
+                                </h6>
+                            </li>
+                       
                         <Link to="/admin/sites">
                             <li className={`listitem ${active == 'sites' && 'active_category'}`}>
                                 <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
@@ -125,8 +170,8 @@ class AdminSidebar extends React.Component {
                             </li>
                         </Link>
                         <Link to="/admin/AddItem">
-                            <li className={`listitem ${active == 'items' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
+                            <li className={`listitem ${active == 'Additems' && 'active_category'}`}>
+                                <h6 className={`categorylink px-2 ${active == 'Additems' && 'active_category'}`}>
                                     <FontAwesomeIcon icon={faBarcode} className="mx-3 sidebar-icon"></FontAwesomeIcon>Add Items
                                 </h6>
                             </li>

@@ -2,6 +2,7 @@
 import SignIn from '../SignIn/Sign'
 import Dashboard from '../Admin/Dashboard'
 import SiteManagerAdmin from '../Admin/Components/Sitemangers.Admin'
+import createUser from '../Admin/Components/createUser.Admin'
 import SuppliersAdmin from '../Admin/Components/Suplier.Admin'
 import OrderManagement from '../Admin/Components/Order.Admin'
 import SingleOrder from '../Admin/Components/Single.Order'
@@ -27,6 +28,12 @@ let indexRoutes = [
     name: "SiteManagerAdmin",
     component: SiteManagerAdmin,
     exact: true,
+  },
+  {
+    path: "/admin/createUser",
+    name: "createUser",
+    component: createUser,
+    exact:true,
   },
   {
     path: "/admin/suppliers",
