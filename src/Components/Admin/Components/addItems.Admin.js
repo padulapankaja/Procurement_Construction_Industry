@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
 // import { config } from '@fortawesome/fontawesome-svg-core';
 
-class ItemsAdmin extends Component {
+class AddItemsAdmin extends Component {
     constructor() {
         super();
         this.state = {
@@ -108,7 +108,7 @@ class ItemsAdmin extends Component {
 
         return (
             <div className="bg-light wd-wrapper">
-                <SideBar active={"items"} />
+                <SideBar active={"Additems"} />
 
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
@@ -124,7 +124,7 @@ class ItemsAdmin extends Component {
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
-                                            <h6 className="form-label py-2">Item ID *</h6>
+                                            <h6 className="form-label py-2 mt-3">Item ID *</h6>
                                                 <input
                                                     type="text"
                                                     name="item_id"
@@ -132,7 +132,8 @@ class ItemsAdmin extends Component {
                                                     value={item_id}
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
-                                                <h6 className="form-label py-2">Description *</h6>
+
+                                                <h6 className="form-label py-2 mt-3">Description *</h6>
                                                 <input
                                                     type="text"
                                                     name="description"
@@ -150,7 +151,7 @@ class ItemsAdmin extends Component {
                                                
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Item Name *</h6>
+                                                <h6 className="form-label py-2 mt-3">Item Name *</h6>
                                                 <input
                                                     type="text"
                                                     name="item_name"
@@ -158,7 +159,8 @@ class ItemsAdmin extends Component {
                                                     value={item_name}
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
-                                                   <h6 className="form-label py-2 mt-2">Price *</h6>
+
+                                                   <h6 className="form-label py-2 mt-3">Price *</h6>
                                                 <input
                                                     type="text"
                                                     name="price"
@@ -268,4 +270,4 @@ class ItemsAdmin extends Component {
 
 
 }
-export default ItemsAdmin;
+export default AddItemsAdmin;
