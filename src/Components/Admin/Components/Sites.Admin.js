@@ -116,41 +116,39 @@ class Sites extends Component {
 
         return (
             <div className="bg-light wd-wrapper">
-                <SideBar active={"sitemanagers"} />
+                <SideBar active={"sites"} />
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <Loader show={this.state.loading} />
                         <div className="row">
-                            <div className="col-12">
-                                <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    Site  Managment
-                                    {role== 3 ?<span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Site</span>:''}
-
-                                
-                                </h5>
+                        <div className="col-12">
+                                <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                   Site Management
+                                </h6>
                             </div>
-                            <div className="col-12" style={{ display: this.state.addManagerState == true ? 'block' : 'none' }}>
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
+                            { role== 3 &&
+                            <div className="col-12">
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2">Address *</h6>
+                                                <h6 className="form-label mb-2 mt-2">Address *</h6>
                                                 <input
                                                     type="text"
                                                     name="address"
-                                                    placeholder="Gall - Main Street"
+                                                    placeholder="Enter Site Address"
                                                     value={address}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                                <h6 className="form-label py-2 mt-2">Site Code *</h6>
+                                                <h6 className="form-label mb-2 mt-3">Site Code *</h6>
                                                 <input
                                                     type="text"
                                                     name="site_code"
-                                                    placeholder="GL152"
+                                                    placeholder="Enter Side Code"
                                                     value={site_code}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2">Site Manager *</h6>
+                                                <h6 className="form-label mb-2 mt-2">Site Manager *</h6>
                                                 <select
                                                     name="site_manager"
                                                     value={site_manager}
@@ -159,38 +157,41 @@ class Sites extends Component {
                                                     {this.renderOptions()}
 
                                                 </select>
-                                            </div>
-                                            <div className="col-md-12 mt-4">
-                                                <div className="d-flex">
-                                                    <button type="reset" onClick={() => this.clear()} className="px-2 btn btn-secondary  btn-sm bold-normal ml-auto" >
-                                                        Cancel
-                                                </button>
-                                                    <button type="submit" className="px-2 btn btn-dark  btn-sm bold-normal ml-2"   >
+                                                <br></br>
+                                                <div className="d-flex mt-3">
+                                                    <button type="submit" className="font-weight-bold px-2 btn btn-dark  btn-sm bold-normal"   >
                                                         Add Site
+                                                </button>
+                                                    <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
+                                                        Cancel
                                                 </button>
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div>}
                             {/* ----------------------------------------------------------- */}
                             <div className="col-12">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <h5 className="text-dark bold-normal py-2 bg-white px-2">
-                                        All Sites
-                                </h5>
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Site Code</th>
-                                                    <th scope="col">Site Addreess</th>
-                                                    <th scope="col">Site Manager</th>
+                                                    <th scope="col"><h6 className="header">ID</h6></th>
+                                                    <th scope="col"><h6 className="header">Site Code</h6></th>
+                                                    <th scope="col"><h6 className="header">Site Addreess</h6></th>
+                                                    <th scope="col"><h6 className="header">Site Manager</h6></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {this.state.all_sites && this.state.all_sites.map(item => this.display_all_site_managers(item))}
+                                                {this.state.all_sites 
+                                                && this.state.all_sites.map((item,i) => this.display_all_site_managers(item,i))}
+
+                                                {this.state.loading &&
+                                                    <td colSpan={4}><h6 className="text-dark normal text-center py-2">Loading...</h6></td>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -202,13 +203,14 @@ class Sites extends Component {
             </div>
         );
     }
-    display_all_site_managers = data_arry => {
+    display_all_site_managers = (data_arry,i) => {
         // console.log(this.state.all_sites);
         return (
             <tr key={data_arry._id}>
-                <td> {data_arry.site_code}</td>
-                <td> {data_arry.address}</td>
-                <td> {data_arry.site_manager.username}</td>
+                 <td><h6 className="text-dark normal">{("0" + (i+1)).slice(-2)}</h6></td>
+                 <td><h6 className="text-dark normal">{data_arry.site_code}</h6></td>
+                 <td><h6 className="text-dark normal">{data_arry.address}</h6></td>
+                 <td><h6 className="text-dark normal">{data_arry.site_manager.username}</h6></td>
             </tr>
         );
     }

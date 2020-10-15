@@ -16,6 +16,9 @@ code {
   font-size:  90% !important;
   margin-bottom:  0px !important;
 }
+.dd{
+  font-size:  0.95rem !important;
+}
 
 .header{
   font-weight: 600 !important;
@@ -25,4 +28,8 @@ code {
 
 span {
   font-family:  'Poppins' !important;
+}
+
+a:hover {
+  text-decoration: none !important;
 }

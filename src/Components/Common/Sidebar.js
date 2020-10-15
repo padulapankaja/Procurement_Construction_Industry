@@ -101,39 +101,39 @@ class AdminSidebar extends React.Component {
                         {role == 2 || role == 3 ?
                             <li className="listitem" className={`listitem ${active == 'dashboard' && 'active_category'}`}>
                                 <Link to="/admin/dashboard">
-                                    <h6 className={`categorylink px-2 ${active == 'dashboard' && 'active_category'}`}>
+                                    <h6 className={`dd categorylink px-2 ${active == 'dashboard' && 'active_category'}`}>
                                         <FontAwesomeIcon icon={faTachometerAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Dashboard
                              </h6></Link>
                             </li>
 
                             : ''}
                         <Link to="/admin/pending">
-                            <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
+                            <li className={`listitem ${active == 'Pending' && 'active_category'}`}>
+                                <h6 className={`dd categorylink px-2 ${active == 'Pending' && 'active_category'}`}>
                                     <FontAwesomeIcon icon={faHourglassHalf} className="mx-3 sidebar-icon"></FontAwesomeIcon>Pending Orders
                                 </h6>
                             </li>
                         </Link>
                         <Link to="/admin/completed">
-                            <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faCheck} className="mx-3 sidebar-icon"></FontAwesomeIcon>Completed Orders
+                            <li className={`listitem ${active == 'Completed' && 'active_category'}`}>
+                                <h6 className={`dd categorylink px-2 ${active == 'Completed' && 'active_category'}`}>
+                                    <FontAwesomeIcon icon={faCheck} className="mx-3 sidebar-icon"></FontAwesomeIcon>Comp. Orders
                                 </h6>
                             </li>
                         </Link>
                         {role == 2 || role == 3 ?
-                            <li className="listitem" className={`listitem ${active == 'userManagement' && 'active_category'}`}>
+                            <li className="listitem" className={`listitem ${active == 'sitemanagers' && 'active_category'}`}>
                                 <Link to="/admin/sitemanagers">
-                                    <h6 className="categorylink px-2">
-                                        <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>User Management
+                                    <h6 className={`dd categorylink px-2 ${active == 'sitemanagers' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>User Details
                                 </h6></Link>
                             </li>
                             : ''}
                         {role == 3 &&
                             <Link to="/admin/createUser">
-                                <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
-                                    <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
-                                        <FontAwesomeIcon icon={faUserPlus} className="mx-3 sidebar-icon"></FontAwesomeIcon>Create User
+                                <li className={`listitem ${active == 'CreateUser' && 'active_category'}`}>
+                                    <h6 className={`dd categorylink px-2 ${active == 'CreateUser' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faUserPlus} className="mx-3 sidebar-icon"></FontAwesomeIcon>Create Users
                                 </h6>
                                 </li>
                             </Link>
@@ -141,7 +141,7 @@ class AdminSidebar extends React.Component {
                         {role == 2 || role == 3 ?
                             <Link to="/admin/suppliers">
                                 <li className={`listitem ${active == 'suppliers' && 'active_category'}`}>
-                                    <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
+                                    <h6 className={`dd categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
                                         <FontAwesomeIcon icon={faTruck} className="mx-3 sidebar-icon"></FontAwesomeIcon>Suppliers
                                 </h6>
                                 </li>
@@ -150,8 +150,8 @@ class AdminSidebar extends React.Component {
                         {role == 2 || role == 3 ?
                             <Link to="/admin/sites">
                                 <li className={`listitem ${active == 'sites' && 'active_category'}`}>
-                                    <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
-                                        <FontAwesomeIcon icon={faSuitcase} className="mx-3 sidebar-icon"></FontAwesomeIcon>Sites
+                                    <h6 className={`dd categorylink px-2 ${active == 'sites' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faSuitcase} className="mx-3 sidebar-icon"></FontAwesomeIcon>Site Details
                                 </h6>
                                 </li>
                             </Link>
@@ -159,8 +159,8 @@ class AdminSidebar extends React.Component {
                         {role == 2 || role == 3 ?
                             <Link to="/admin/items">
                                 <li className={`listitem ${active == 'items' && 'active_category'}`}>
-                                    <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
-                                        <FontAwesomeIcon icon={faThList} className="mx-3 sidebar-icon"></FontAwesomeIcon>Items List
+                                    <h6 className={`dd categorylink px-2 ${active == 'items' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faThList} className="mx-3 sidebar-icon"></FontAwesomeIcon>Item Details
                                 </h6>
                                 </li>
                             </Link>
@@ -168,14 +168,14 @@ class AdminSidebar extends React.Component {
                         {role == 2 || role == 3 ?
                             <Link to="/admin/AddItem">
                                 <li className={`listitem ${active == 'Additems' && 'active_category'}`}>
-                                    <h6 className={`categorylink px-2 ${active == 'Additems' && 'active_category'}`}>
+                                    <h6 className={`dd categorylink px-2 ${active == 'Additems' && 'active_category'}`}>
                                         <FontAwesomeIcon icon={faBarcode} className="mx-3 sidebar-icon"></FontAwesomeIcon>Add Items
                                 </h6>
                                 </li>
                             </Link>
                             : ''}
                         <li onClick={() => this.signoutuser()} className={`listitem click`}>
-                            <h6 className={`categorylink px-2 `}>
+                            <h6 className={`dd categorylink px-2 `} style={{fontSize : '98%'}}>
                                 <FontAwesomeIcon icon={faSignOutAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Logout
                              </h6>
                         </li>
