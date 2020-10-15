@@ -106,7 +106,7 @@ class AdminSidebar extends React.Component {
                              </h6></Link>
                             </li>
 
-                       :'' }
+                            : ''}
                         <Link to="/admin/pending">
                             <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
                                 <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
@@ -128,7 +128,7 @@ class AdminSidebar extends React.Component {
                                         <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>User Management
                                 </h6></Link>
                             </li>
-                       :'' }
+                            : ''}
                         {role == 3 &&
                             <Link to="/admin/createUser">
                                 <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
@@ -138,7 +138,7 @@ class AdminSidebar extends React.Component {
                                 </li>
                             </Link>
                         }
-                        {role == 2 || role == 3  ?
+                        {role == 2 || role == 3 ?
                             <Link to="/admin/suppliers">
                                 <li className={`listitem ${active == 'suppliers' && 'active_category'}`}>
                                     <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
@@ -146,8 +146,8 @@ class AdminSidebar extends React.Component {
                                 </h6>
                                 </li>
                             </Link>
-                       :''  }
-                        {role == 2 || role == 3  ? 
+                            : ''}
+                        {role == 2 || role == 3 ?
                             <Link to="/admin/sites">
                                 <li className={`listitem ${active == 'sites' && 'active_category'}`}>
                                     <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
@@ -155,7 +155,7 @@ class AdminSidebar extends React.Component {
                                 </h6>
                                 </li>
                             </Link>
-                       :'' }
+                            : ''}
                         {role == 2 || role == 3 ?
                             <Link to="/admin/items">
                                 <li className={`listitem ${active == 'items' && 'active_category'}`}>
@@ -164,8 +164,8 @@ class AdminSidebar extends React.Component {
                                 </h6>
                                 </li>
                             </Link>
-                        :''}
-                        {role == 2 || role == 3 &&
+                            : ''}
+                        {role == 2 || role == 3 ?
                             <Link to="/admin/AddItem">
                                 <li className={`listitem ${active == 'Additems' && 'active_category'}`}>
                                     <h6 className={`categorylink px-2 ${active == 'Additems' && 'active_category'}`}>
@@ -173,7 +173,7 @@ class AdminSidebar extends React.Component {
                                 </h6>
                                 </li>
                             </Link>
-                        }
+                            : ''}
                         <li onClick={() => this.signoutuser()} className={`listitem click`}>
                             <h6 className={`categorylink px-2 `}>
                                 <FontAwesomeIcon icon={faSignOutAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Logout

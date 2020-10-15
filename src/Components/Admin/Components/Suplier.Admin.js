@@ -5,7 +5,8 @@ import ADMIN from '../../Controller/Admin.controller'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
-
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 class SupliersAdmin extends Component {
     constructor() {
         super();
@@ -73,7 +74,7 @@ class SupliersAdmin extends Component {
     }
     render() {
         const { name, contactNumber, email } = this.state
-
+        const role = this.props.auth.user.role;
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"suppliers"} />
@@ -84,7 +85,7 @@ class SupliersAdmin extends Component {
                             <div className="col-12">
                                 <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
                                     Suppliers Managment
-                                <span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Supplier</span>
+                                    {role== 3 ?<span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Supplier</span>:''}
                                 </h5>
                             </div>
                             <div className="col-12" style={{ display: this.state.addSuplierState == true ? 'block' : 'none' }}>
@@ -189,4 +190,9 @@ class SupliersAdmin extends Component {
         );
     }
 }
-export default SupliersAdmin;
+
+const mapStateToProps = (state) => ({
+    auth: state.auth || {},
+});
+
+export default connect(mapStateToProps, null)(withRouter(SupliersAdmin));
