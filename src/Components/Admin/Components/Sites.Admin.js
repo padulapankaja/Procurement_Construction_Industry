@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
 import { withRouter } from 'react-router-dom'
 import Loader from '../Loading'
+import { connect } from "react-redux";
+
 
 class Sites extends Component {
     constructor() {
@@ -110,6 +112,8 @@ class Sites extends Component {
 
     render() {
         const { address, site_code, site_manager } = this.state
+        const role = this.props.auth.user.role;
+
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"sitemanagers"} />
@@ -120,7 +124,9 @@ class Sites extends Component {
                             <div className="col-12">
                                 <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
                                     Site  Managment
-                                <span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Site</span>
+                                    {role== 3 ?<span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Site</span>:''}
+
+                                
                                 </h5>
                             </div>
                             <div className="col-12" style={{ display: this.state.addManagerState == true ? 'block' : 'none' }}>
@@ -207,4 +213,8 @@ class Sites extends Component {
         );
     }
 }
-export default withRouter(Sites);
+const mapStateToProps = (state) => ({
+    auth: state.auth || {},
+});
+
+export default connect(mapStateToProps, null)(withRouter(Sites));

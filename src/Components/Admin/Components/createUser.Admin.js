@@ -11,9 +11,9 @@ import Select from 'react-select';
 
 const options = [
     { value: 'Site Manager', label: 'Site Manager' },
-    { value: 'Accountant ', label: 'Accountant ' },
+    { value: 'Accountant', label: 'Accountant ' },
     { value: 'Management(Admin)', label: 'Management(Admin)' },
-  ];
+];
 
 class createUser extends Component {
     constructor() {
@@ -31,7 +31,7 @@ class createUser extends Component {
             viewUser: '',
             showUserModal: false,
             selectedOption: null,
-            designation:'',
+            designation: '',
 
         };
         this.get_all_site_managers()
@@ -43,7 +43,7 @@ class createUser extends Component {
     handleChange = selectedOption => {
         this.setState({ selectedOption });
         console.log(`Option selected:`, selectedOption);
-      };
+    };
 
     change_toggle = () => {
         if (this.state.addManagerState) {
@@ -55,22 +55,29 @@ class createUser extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault()
-        var role_number;
-        if(this.state.selectedOption.value == "Site Manager")
+        var role_number = 0;
+        if (this.state.selectedOption.value == "Site Manager")
             role_number = 1
-        else if(this.state.selectedOption.value == "Accountant")
+        else if (this.state.selectedOption.value == "Accountant")
             role_number = 2
-        else if(this.state.selectedOption.value == "Management(Admin)")
+        else if (this.state.selectedOption.value == "Management(Admin)")
             role_number = 3
-         console.log(this.state.selectedOption.value);
+
+
+
+        console.log(this.state.selectedOption.value);
+        console.log(role_number);
+
+
         var data = {
             username: this.state.name,
             contact_number: this.state.contactNumber,
             email: this.state.email,
             password: Config.password,
-            designation:this.state.selectedOption.value,
+            designation: this.state.selectedOption.value,
             role: role_number
         }
+        console.log(data);
 
         ADMIN.register_site_manager(data).then(result => {
             Config.setToast("Successfully Registed")
@@ -117,7 +124,7 @@ class createUser extends Component {
     }
 
     render() {
-        const { name, contactNumber, email, site_code, site_location, viewUser, selectedOption  } = this.state
+        const { name, contactNumber, email, site_code, site_location, viewUser, selectedOption } = this.state
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"createUser"} />
@@ -159,7 +166,9 @@ class createUser extends Component {
                                                     className="form-control" disabled></input>
                                             </div>
                                             <div className="col-md-6">
+
                                                 <h6 className="form-label mb-2 mt-2">Email Address *</h6>
+
                                                 <input
                                                     type="email"
                                                     name="email"
@@ -187,13 +196,23 @@ class createUser extends Component {
                                             </div>
                                             <div className="col-md-6">
 
-                                                
-                                               
-                                               
+                                                <h6 className="form-label py-2 mt-3">Designation  *</h6>
+                                                <Select name="designation"
+                                                    value={selectedOption}
+                                                    onChange={this.handleChange}
+                                                    options={options}
+                                                />
+
+                                                <h6 className="form-label py-2 mt-3">Password  *</h6>
+                                                <input
+                                                    type="password"
+                                                    name="password"
+                                                    placeholder="Automaticaly Generate and Email"
+                                                    className="form-control" disabled></input>
                                             </div>
                                             <div className="col-md-6">
                                                 {/* <h6 className="form-label py-2 ">Site Location *</h6> */}
-                                                <input 
+                                                <input
                                                     type="text"
                                                     name="site_location"
                                                     placeholder="Galle - Main Street"

@@ -26,7 +26,12 @@ import {
     faTimes,
     faSitemap,
     faPlus,
-    faSort
+    faSort,
+    faHourglassHalf,
+    faCheck,
+    faUserPlus,
+    faTruck,
+    faThList
 } from "@fortawesome/free-solid-svg-icons";
 
 class AdminSidebar extends React.Component {
@@ -68,7 +73,9 @@ class AdminSidebar extends React.Component {
             role_name = "Management"
         else if (role == 0)
             role_name = "supplier"
-        // const isadmin = (role && role == "admin") ? true : false
+        console.log("Users role", role);
+
+
         return (
             <>
                 <nav className="navbar navbar-dark bg-dark py-0 shadow-sm  fixed-top">
@@ -83,8 +90,6 @@ class AdminSidebar extends React.Component {
                                 <h6 style={{ lineHeight: '12px', fontWeight: 600 }}
                                     className={`text-white mb-0 mt-1`}>
                                     {role_name}
-                                    {/* {role && role.length > 1 && 
-                                    role[0].toUpperCase() + role.substring(1)}  */}
                                 </h6>
                                 <span className="small text-light ">
                                     {this.props.auth.user.email}
@@ -93,89 +98,82 @@ class AdminSidebar extends React.Component {
                         </div>
                     </div>
                     <ul className="sidebar">
-                        <li className="listitem" className={`listitem ${active == 'dashboard' && 'active_category'}`}>
-                            <Link to="/admin/dashboard">
-                                <h6 className={`categorylink px-2 ${active == 'dashboard' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faTachometerAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Dashboard
-                                </h6></Link>
-                        </li>
+                        {role == 2 || role == 3 ?
+                            <li className="listitem" className={`listitem ${active == 'dashboard' && 'active_category'}`}>
+                                <Link to="/admin/dashboard">
+                                    <h6 className={`categorylink px-2 ${active == 'dashboard' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faTachometerAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Dashboard
+                             </h6></Link>
+                            </li>
 
-                        <li className="listitem" className={`listitem ${active == 'userManagement' && 'active_category'}`}>
-                            <Link to="/admin/sitemanagers">
-                                <h6 className="categorylink px-2">
-                                    <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>User Management
-                                </h6></Link>
-                        </li>
-                        <Link to="/admin/createUser">
+                            : ''}
+                        <Link to="/admin/pending">
                             <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
                                 <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faPlus} className="mx-3 sidebar-icon"></FontAwesomeIcon>Create User
+                                    <FontAwesomeIcon icon={faHourglassHalf} className="mx-3 sidebar-icon"></FontAwesomeIcon>Pending Orders
                                 </h6>
                             </li>
                         </Link>
-               
-                        <Link to="/admin/suppliers">
-                            <li className={`listitem ${active == 'suppliers' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faTags} className="mx-3 sidebar-icon"></FontAwesomeIcon>Suppliers
-                                </h6>
-                            </li>
-                        </Link>
-                        
-                            <li className={`listitem ${active == 'createUser' && 'active_category'}`} onClick={() => this.change_toggle()}>
+                        <Link to="/admin/completed">
+                            <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
                                 <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faSitemap} className="mx-3 sidebar-icon"></FontAwesomeIcon>Orders<FontAwesomeIcon icon={faSort} className="mx-2"></FontAwesomeIcon>
-                                    <ul className="sidebar" style={{ display: this.state.addSuplierState == true ? 'block' : 'none' }}>
-                                        <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
-                                            <Link to="/admin/pending">
-                                            <h6 className={`categorylink py-2 mt-1 ml-5  ${active == 'createUser' && 'active_category'}`}>
-                                                Pending Orders
-                                            </h6>
-                                            </Link>
-                                            <Link to="/admin/approved">
-                                            <h6 className={`categorylink py-2 mt-2 ml-5  ${active == 'createUser' && 'active_category'}`}>
-                                                Approved Orders
-                                            </h6>
-                                            </Link>
-                                            <Link to="/admin/rejected">
-                                            <h6 className={`categorylink py-2 mt-2 ml-5  ${active == 'createUser' && 'active_category'}`}>
-                                               Rejected Orders
-                                            </h6>
-                                            </Link>
-                                        </li>
-                                      
-                                    </ul>
-                                </h6>
-                            </li>
-                       
-                        <Link to="/admin/sites">
-                            <li className={`listitem ${active == 'sites' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faSuitcase} className="mx-3 sidebar-icon"></FontAwesomeIcon>Sites
+                                    <FontAwesomeIcon icon={faCheck} className="mx-3 sidebar-icon"></FontAwesomeIcon>Completed Orders
                                 </h6>
                             </li>
                         </Link>
-                        <Link to="/admin/orders">
-                            <li className={`listitem ${active == 'orders' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'orders' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faPlusSquare} className="mx-3 sidebar-icon"></FontAwesomeIcon>Orders
-                                </h6>
+                        {role == 2 || role == 3 ?
+                            <li className="listitem" className={`listitem ${active == 'userManagement' && 'active_category'}`}>
+                                <Link to="/admin/sitemanagers">
+                                    <h6 className="categorylink px-2">
+                                        <FontAwesomeIcon icon={faUser} className="mx-3 sidebar-icon"></FontAwesomeIcon>User Management
+                                </h6></Link>
                             </li>
-                        </Link>
-                        <Link to="/admin/items">
-                            <li className={`listitem ${active == 'items' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faTimes} className="mx-3 sidebar-icon"></FontAwesomeIcon>Items List
+                            : ''}
+                        {role == 3 &&
+                            <Link to="/admin/createUser">
+                                <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
+                                    <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faUserPlus} className="mx-3 sidebar-icon"></FontAwesomeIcon>Create User
                                 </h6>
-                            </li>
-                        </Link>
-                        <Link to="/admin/AddItem">
-                            <li className={`listitem ${active == 'Additems' && 'active_category'}`}>
-                                <h6 className={`categorylink px-2 ${active == 'Additems' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faBarcode} className="mx-3 sidebar-icon"></FontAwesomeIcon>Add Items
+                                </li>
+                            </Link>
+                        }
+                        {role == 2 || role == 3 ?
+                            <Link to="/admin/suppliers">
+                                <li className={`listitem ${active == 'suppliers' && 'active_category'}`}>
+                                    <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faTruck} className="mx-3 sidebar-icon"></FontAwesomeIcon>Suppliers
                                 </h6>
-                            </li>
-                        </Link>
+                                </li>
+                            </Link>
+                            : ''}
+                        {role == 2 || role == 3 ?
+                            <Link to="/admin/sites">
+                                <li className={`listitem ${active == 'sites' && 'active_category'}`}>
+                                    <h6 className={`categorylink px-2 ${active == 'suppliers' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faSuitcase} className="mx-3 sidebar-icon"></FontAwesomeIcon>Sites
+                                </h6>
+                                </li>
+                            </Link>
+                            : ''}
+                        {role == 2 || role == 3 ?
+                            <Link to="/admin/items">
+                                <li className={`listitem ${active == 'items' && 'active_category'}`}>
+                                    <h6 className={`categorylink px-2 ${active == 'items' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faThList} className="mx-3 sidebar-icon"></FontAwesomeIcon>Items List
+                                </h6>
+                                </li>
+                            </Link>
+                            : ''}
+                        {role == 2 || role == 3 ?
+                            <Link to="/admin/AddItem">
+                                <li className={`listitem ${active == 'Additems' && 'active_category'}`}>
+                                    <h6 className={`categorylink px-2 ${active == 'Additems' && 'active_category'}`}>
+                                        <FontAwesomeIcon icon={faBarcode} className="mx-3 sidebar-icon"></FontAwesomeIcon>Add Items
+                                </h6>
+                                </li>
+                            </Link>
+                            : ''}
                         <li onClick={() => this.signoutuser()} className={`listitem click`}>
                             <h6 className={`categorylink px-2 `}>
                                 <FontAwesomeIcon icon={faSignOutAlt} className="mx-3 sidebar-icon"></FontAwesomeIcon>Logout
