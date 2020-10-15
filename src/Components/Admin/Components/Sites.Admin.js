@@ -25,7 +25,7 @@ class Sites extends Component {
 
     }
     formValueChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({ [e.target.name]: e.target.value })
     }
 
@@ -48,13 +48,15 @@ class Sites extends Component {
             site_manager: this.state.site_manager,
         }
         ADMIN.add_site(data).then(result => {
-            console.log(result);
+            // console.log(result);
             this.clear()
             this.get_all_sites()
+            this.get_all_site_managers()
+            this.renderOptions()
             Config.setToast("Successfully Added")
 
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
             Config.setErrorToast("Someting went wrong")
 
         })
@@ -69,15 +71,15 @@ class Sites extends Component {
     get_all_site_managers = async () => {
         ADMIN.get_all_site_managers().then(response => {
 
-            console.log(response.data.data);
+            // console.log(response.data.data);
             this.setState({
                 site_managers_arry: response.data.data,
             })
-            console.log(this.state.site_managers_arry);
+            // console.log(this.state.site_managers_arry);
 
         }).then(res => {
             this.renderOptions()
-            console.log(this.state.site_managers_arry);
+            // console.log(this.state.site_managers_arry);
 
         }).then(res => {
 
@@ -95,12 +97,12 @@ class Sites extends Component {
                 all_sites: result.data.data
             })
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
         })
     }
 
     renderOptions() {
-        console.log(this.state.site_managers_arry);
+        // console.log(this.state.site_managers_arry);
         return this.state.site_managers_arry.filter(user => user.site_code == "").map((dt, i) => {
             return (<option className="form-control" value={dt._id}> {dt.username}</option>)
         });
@@ -113,7 +115,7 @@ class Sites extends Component {
                 <SideBar active={"sitemanagers"} />
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
-                        {/* <Loader show={this.state.loading} /> */}
+                        <Loader show={this.state.loading} />
                         <div className="row">
                             <div className="col-12">
                                 <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
@@ -195,7 +197,7 @@ class Sites extends Component {
         );
     }
     display_all_site_managers = data_arry => {
-        console.log(this.state.all_sites);
+        // console.log(this.state.all_sites);
         return (
             <tr key={data_arry._id}>
                 <td> {data_arry.site_code}</td>

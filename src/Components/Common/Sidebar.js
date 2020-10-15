@@ -124,22 +124,22 @@ class AdminSidebar extends React.Component {
                         
                             <li className={`listitem ${active == 'createUser' && 'active_category'}`} onClick={() => this.change_toggle()}>
                                 <h6 className={`categorylink px-2 ${active == 'createUser' && 'active_category'}`}>
-                                    <FontAwesomeIcon icon={faSitemap} className="mx-3 sidebar-icon"></FontAwesomeIcon>Purchase Requests<FontAwesomeIcon icon={faSort} className="mx-2"></FontAwesomeIcon>
+                                    <FontAwesomeIcon icon={faSitemap} className="mx-3 sidebar-icon"></FontAwesomeIcon>Orders<FontAwesomeIcon icon={faSort} className="mx-2"></FontAwesomeIcon>
                                     <ul className="sidebar" style={{ display: this.state.addSuplierState == true ? 'block' : 'none' }}>
                                         <li className={`listitem ${active == 'createUser' && 'active_category'}`}>
-                                            <Link to="/admin/createUser">
+                                            <Link to="/admin/pending">
                                             <h6 className={`categorylink py-2 mt-1 ml-5  ${active == 'createUser' && 'active_category'}`}>
-                                                Pending PR
+                                                Pending Orders
                                             </h6>
                                             </Link>
-                                            <Link to="/admin/suppliers">
+                                            <Link to="/admin/approved">
                                             <h6 className={`categorylink py-2 mt-2 ml-5  ${active == 'createUser' && 'active_category'}`}>
-                                                Approved PR
+                                                Approved Orders
                                             </h6>
                                             </Link>
-                                            <Link to="/admin/sites">
+                                            <Link to="/admin/rejected">
                                             <h6 className={`categorylink py-2 mt-2 ml-5  ${active == 'createUser' && 'active_category'}`}>
-                                               Rejected PR
+                                               Rejected Orders
                                             </h6>
                                             </Link>
                                         </li>

@@ -9,6 +9,9 @@ import SingleOrder from '../Admin/Components/Single.Order'
 import SitesManagment from '../Admin/Components/Sites.Admin'
 import ItemsManagement from '../Admin/Components/Items.Admin'
 import AddItem from '../Admin/Components/addItems.Admin';
+import ApprovedOrders from '../Orders/approved.order';
+import RejectedOrders from '../Orders/reject.order';
+import PendingOrders from '../Orders/pending.order';
 
 
 
@@ -63,6 +66,24 @@ let indexRoutes = [
     path: "/admin/AddItem",
     name: "AddItem",
     component: AddItem,
+    exact:true,
+  },
+  {
+    path: "/admin/pending",
+    name: "PendingOrders",
+    component: PendingOrders,
+    exact:true,
+  },
+  {
+    path: "/admin/approved",
+    name: "ApprovedOrders",
+    component: ApprovedOrders,
+    exact:true,
+  },
+  {
+    path: "/admin/rejected",
+    name: "RejectedOrders",
+    component: RejectedOrders,
     exact:true,
   },
   {
