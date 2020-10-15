@@ -38,45 +38,9 @@ class SiteManagersAdmin extends Component {
         }
     }
 
-    onSubmit = async (e) => {
-        e.preventDefault()
-        var data = {
-            username: this.state.name,
-            contact_number: this.state.contactNumber,
-            email: this.state.email,
-            password: Config.password,
-            site_code: this.state.site_code,
-            site_location: this.state.site_location,
-            role: 1
-        }
-        ADMIN.register_site_manager(data).then(result => {
-            Config.setToast("Successfully Registed")
-            this.get_all_site_managers()
-            this.clear()
-            this.setState({
-                addManagerState: false
-            })
-            this.props.history.push("/admin/sitemanagers");
-        }).catch(err => {
-            console.log(err.code);
-            Config.setErrorToast("Someting went wrong")
-            this.props.history.push("/admin/sitemanagers");
-        })
 
-    }
-
-    clear = () => {
-        this.setState({
-            name: '',
-            contactNumber: '',
-            email: '',
-            site_code: '',
-            site_location: '',
-            password: Config.password,
-        })
-    }
     get_all_site_managers = async () => {
-        const res = await ADMIN.get_all_site_managers()
+        const res = await ADMIN.get_all_site_users_details()
         console.log(res);
         this.setState({
             site_managers_arry: res.data.data
@@ -108,7 +72,7 @@ class SiteManagersAdmin extends Component {
                                     User Managment
                                 </h5>
                             </div>
-                           
+
                             {/* ----------------------------------------------------------- */}
                             <div className="col-12">
                                 <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
@@ -123,7 +87,7 @@ class SiteManagersAdmin extends Component {
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Designation</th>
                                                     <th scope="col">Contact Number</th>
-                                                    <th scope="col">Actions</th>
+                                                    {/* <th scope="col">Actions</th> */}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -187,14 +151,15 @@ class SiteManagersAdmin extends Component {
             <tr key={data_arry._id}>
                 <td> {data_arry.username}</td>
                 <td> {data_arry.email}</td>
+                <td> {data_arry.designation} </td>
                 <td> {data_arry.contact_number}</td>
                 {/* { data_arry.site_code != "" ? <td> {data_arry.site_code} </td> :<td> <span className="badge badge-warning">Not Assign</span>  </td> } */}
-                
-                <td>
+
+                {/* <td>
                     <button className="btn btn-success btn-sm px-2 mr-2" onClick={() => this.showViewUser(data_arry._id)}>
                         <FontAwesomeIcon icon={faEye} />
                     </button>
-                </td>
+                </td> */}
             </tr>
         );
     }

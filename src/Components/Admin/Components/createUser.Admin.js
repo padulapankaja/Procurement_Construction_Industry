@@ -26,11 +26,13 @@ class createUser extends Component {
             site_location: '',
             site_code: '',
             password: Config.password,
-            site_managers_arry: [],
+            all_users: [],
             loading: true,
             viewUser: '',
             showUserModal: false,
             selectedOption: null,
+            designation:'',
+
         };
         this.get_all_site_managers()
     }
@@ -53,15 +55,23 @@ class createUser extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault()
+        var role_number;
+        if(this.state.selectedOption.value == "Site Manager")
+            role_number = 1
+        else if(this.state.selectedOption.value == "Accountant")
+            role_number = 2
+        else if(this.state.selectedOption.value == "Management(Admin)")
+            role_number = 3
+         console.log(this.state.selectedOption.value);
         var data = {
             username: this.state.name,
             contact_number: this.state.contactNumber,
             email: this.state.email,
             password: Config.password,
-            site_code: this.state.site_code,
-            site_location: this.state.site_location,
-            role: 1
+            designation:this.state.selectedOption.value,
+            role: role_number
         }
+
         ADMIN.register_site_manager(data).then(result => {
             Config.setToast("Successfully Registed")
             this.get_all_site_managers()
@@ -89,17 +99,17 @@ class createUser extends Component {
         })
     }
     get_all_site_managers = async () => {
-        const res = await ADMIN.get_all_site_managers()
+        const res = await ADMIN.get_all_site_users_details()
         console.log(res);
         this.setState({
-            site_managers_arry: res.data.data
+            all_users: res.data.data
         })
         await this.setState({
             loading: false,
         });
     }
     showViewUser(i) {
-        var singleUser = this.state.site_managers_arry.filter(user => user._id == i);
+        var singleUser = this.state.all_users.filter(user => user._id == i);
         this.setState({
             showUserModal: true,
             viewUser: singleUser[0]
@@ -114,7 +124,7 @@ class createUser extends Component {
 
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
-                        <Loader show={this.state.loading} />
+                        {/* <Loader show={this.state.loading} /> */}
                         <div className="row">
                             <div className="col-12">
                                 <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
@@ -157,7 +167,7 @@ class createUser extends Component {
                                             <div className="col-md-6">
 
                                                 <h6 className="form-label py-2 mt-3">Designation  *</h6>
-                                                    <Select
+                                                    <Select name="designation"
                                                         value={selectedOption}
                                                         onChange={this.handleChange}
                                                         options={options}
@@ -195,7 +205,7 @@ class createUser extends Component {
                                                         Cancel
                                                 </button>
                                                     <button type="submit" className="px-2 btn btn-dark  btn-sm bold-normal ml-2"   >
-                                                        Add Manager
+                                                        Add User
                                                 </button>
                                                 </div>
                                             </div>
@@ -203,7 +213,6 @@ class createUser extends Component {
                                     </form>
                                 </div>
                             </div>
-                           
                         </div>
                     </div>
                 </div>

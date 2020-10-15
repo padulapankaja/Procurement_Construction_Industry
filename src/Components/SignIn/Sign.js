@@ -26,12 +26,16 @@ class SignIn extends Component {
         console.log(this.state.username);
         console.log(this.state.password);
 
-        const result = await CommonController.common_sign(this.state.username, this.state.password)
-        console.log(result);
-        if(result.code == 200){
-            this.props.setCurrentUser(result.data.data);
-            this.props.history.push("/admin/dashboard");
-        }
+        CommonController.common_sign(this.state.username, this.state.password).then(response=>{
+            console.log(response.data.data);
+            if(response.code == 200){
+                this.props.setCurrentUser(response.data.data);
+                this.props.history.push("/admin/dashboard");
+            }
+        }).catch(err =>{
+
+        })
+        
       
 
     }
