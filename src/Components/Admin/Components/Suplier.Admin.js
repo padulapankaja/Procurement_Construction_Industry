@@ -11,6 +11,7 @@ class SupliersAdmin extends Component {
     constructor() {
         super();
         this.state = {
+            loading : true ,
             addSuplierState: false,
             name: '',
             contactNumber: '',
@@ -29,11 +30,10 @@ class SupliersAdmin extends Component {
         const res = await ADMIN.get_all_suppliers()
         console.log(res);
         this.setState({
-            suppliers_arry: res.data.data
+            suppliers_arry: res.data.data,
+            loading : false
         })
-        await this.setState({
-            loading: false,
-        });
+       
     }
     change_toggle = () => {
         if (this.state.addSuplierState) {
@@ -82,90 +82,91 @@ class SupliersAdmin extends Component {
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <div className="row">
-                            <div className="col-12">
-                                <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    Suppliers Managment
-                                    {role== 3 ?<span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add Supplier</span>:''}
-                                </h5>
+                        <div className="col-12">
+                                <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                Supplier Management
+                                </h6>
                             </div>
-                            <div className="col-12" style={{ display: this.state.addSuplierState == true ? 'block' : 'none' }}>
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
+                            { role == 3 && <div className="col-12" >
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2">Name *</h6>
+                                                <h6 className="form-label mt-2 mb-2">Name *</h6>
                                                 <input
                                                     type="text"
                                                     name="name"
-                                                    placeholder="John"
+                                                    placeholder="Enter Supplier Name"
                                                     value={name}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
 
-                                                <h6 className="form-label py-2 mt-2">Email *</h6>
+                                                <h6 className="form-label mt-3 mb-2">Email *</h6>
                                                 <input
                                                     type="email"
                                                     name="email"
-                                                    placeholder="johndoe@gmail.com"
+                                                    placeholder="Enter Supplier Email"
                                                     value={email}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
 
-                                                <h6 className="form-label py-2 mt-2">Address *</h6>
+                                                <h6 className="form-label mt-3 mb-2">Address *</h6>
                                                 <input
                                                     type="text"
                                                     name="address"
-                                                    placeholder="156/4 , Example Road , Colombo"
+                                                    placeholder="Enter Supplier Address"
                                                     //value={email}
                                                     className="form-control"
                                                     onChange={(e) => this.formValueChange(e)} required></input>
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2 ">Contact Number *</h6>
+                                                <h6 className="form-label mt-2 mb-2">Contact Number *</h6>
                                                 <input
                                                     type="number"
                                                     name="contactNumber"
-                                                    placeholder="07XXXXXXXX"
+                                                    placeholder="Enter Contact No"
                                                     value={contactNumber}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                                <h6 className="form-label py-2 mt-2">Password  *</h6>
+                                                <h6 className="form-label mt-3 mb-2">Password  *</h6>
                                                 <input
                                                     type="password"
                                                     name="password"
                                                     placeholder="Automaticaly Generate and Email"
                                                     className="form-control" disabled></input>
-                                            </div>
-                                            <div className="col-md-12 mt-4">
-                                                <div className="d-flex">
-                                                    <button type="reset" onClick={() => this.clear()} className="px-2 btn btn-secondary  btn-sm bold-normal ml-auto" >
-                                                        Cancel
-                                                </button>
-                                                    <button type="submit" className="px-2 btn btn-dark  btn-sm bold-normal ml-2"   >
+                                                <br></br>
+                                                <div className="d-flex mt-3">
+                                                   
+                                                    <button type="submit" className="font-weight-bold px-2 btn btn-dark  btn-sm bold-normal"   >
                                                         Add Supplier
                                                 </button>
-                                                </div>
+                                                <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
+                                                        Cancel
+                                                </button>
                                             </div>
+                                            </div>
+                                           
                                         </div>
                                     </form>
                                 </div>
                                 {/* <button onClick={() => this.getAllManagers()}>Vee</button> */}
-                            </div>
+                            </div> }
                             {/* ----------------------------------------------------------- */}
                             <div className="col-12">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <h5 className="text-dark bold-normal py-2 bg-white px-2">
-                                        All Suppliers
-                                </h5>
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
+                                 
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Address</th>
-                                                    <th scope="col">Contact No</th>
+                                                    <th scope="col"><h6 className="header">Name</h6></th>
+                                                    <th scope="col"><h6 className="header">Email</h6></th>
+                                                    <th scope="col"><h6 className="header">Address</h6></th>
+                                                    <th scope="col"><h6 className="header">Contact No</h6></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {this.state.suppliers_arry && this.state.suppliers_arry.map(item => this.display_all_supliers(item))}
+                                                {this.state.loading &&
+                                                    <td colSpan={4}><h6 className="text-dark normal text-center py-2">Loading...</h6></td>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -181,10 +182,10 @@ class SupliersAdmin extends Component {
         console.log(this.state.suppliers_arry);
         return (
             <tr key={data_arry._id}>
-                <td> {data_arry.name}</td>
-                <td> {data_arry.email}</td>
-                <td> {data_arry.address} </td>
-                <td> {data_arry.phoneNo}</td>
+                <td> <h6 className="text-dark normal">{data_arry.name}</h6></td>
+                <td> <h6 className="text-dark normal">{data_arry.email}</h6></td>
+                <td> <h6 className="text-dark normal">{data_arry.address} </h6></td>
+                <td> <h6 className="text-dark normal">{data_arry.phoneNo}</h6></td>
 
             </tr>
         );

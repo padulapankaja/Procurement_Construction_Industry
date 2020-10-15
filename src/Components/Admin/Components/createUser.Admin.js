@@ -127,7 +127,7 @@ class createUser extends Component {
         const { name, contactNumber, email, site_code, site_location, viewUser, selectedOption } = this.state
         return (
             <div className="bg-light wd-wrapper">
-                <SideBar active={"createUser"} />
+                <SideBar active={"CreateUser"} />
 
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
@@ -194,22 +194,7 @@ class createUser extends Component {
                                                       
                                                     </div>
                                             </div>
-                                            <div className="col-md-6">
-
-                                                <h6 className="form-label py-2 mt-3">Designation  *</h6>
-                                                <Select name="designation"
-                                                    value={selectedOption}
-                                                    onChange={this.handleChange}
-                                                    options={options}
-                                                />
-
-                                                <h6 className="form-label py-2 mt-3">Password  *</h6>
-                                                <input
-                                                    type="password"
-                                                    name="password"
-                                                    placeholder="Automaticaly Generate and Email"
-                                                    className="form-control" disabled></input>
-                                            </div>
+                                           
                                             <div className="col-md-6">
                                                 {/* <h6 className="form-label py-2 ">Site Location *</h6> */}
                                                 <input
