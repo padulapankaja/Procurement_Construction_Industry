@@ -43,7 +43,7 @@ class SiteManagersAdmin extends Component {
         const res = await ADMIN.get_all_site_users_details()
         console.log(res);
         this.setState({
-            site_managers_arry: res.data.data
+            site_managers_arry: res.data.data.filter( i => i.role != 0)
         })
         await this.setState({
             loading: false,
@@ -68,30 +68,34 @@ class SiteManagersAdmin extends Component {
                         <Loader show={this.state.loading} />
                         <div className="row">
                             <div className="col-12">
-                                <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    User Managment
-                                </h5>
+                                <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                    Users Managment
+                                </h6>
                             </div>
 
                             {/* ----------------------------------------------------------- */}
                             <div className="col-12">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <h5 className="text-dark bold-normal py-2 bg-white px-2">
-                                        Users List
-                                </h5>
-                                    <div className="table-responsive px-2">
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
+                                 
+                                    <div className="table-responsive px-3">
                                         <table className="table table-stripped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Designation</th>
-                                                    <th scope="col">Contact Number</th>
+                                                    <th scope="col"><h6 className="header">Name</h6></th>
+                                                    <th scope="col"><h6 className="header">Email</h6></th>
+                                                    <th scope="col"><h6 className="header">Contact No</h6></th>
+                                                    <th scope="col"><h6 className="header">Designation</h6></th>
+                                                    <th scope="col"><h6 className="header">Access Level</h6></th>
                                                     {/* <th scope="col">Actions</th> */}
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {this.state.site_managers_arry && this.state.site_managers_arry.map(item => this.display_all_site_managers(item))}
+                                                {this.state.site_managers_arry && 
+                                                this.state.site_managers_arry.map(item => this.display_all_site_managers(item))}
+
+                                                { this.state.loading && 
+                                                    <td colSpan={5}><h6 className="text-dark normal text-center py-2">Loading...</h6></td>
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -149,19 +153,17 @@ class SiteManagersAdmin extends Component {
     display_all_site_managers = data_arry => {
         return (
             <tr key={data_arry._id}>
-                <td> {data_arry.username}</td>
-                <td> {data_arry.email}</td>
-                <td> {data_arry.designation} </td>
-                <td> {data_arry.contact_number}</td>
-                {/* { data_arry.site_code != "" ? <td> {data_arry.site_code} </td> :<td> <span className="badge badge-warning">Not Assign</span>  </td> } */}
-
-                {/* <td>
-                    <button className="btn btn-success btn-sm px-2 mr-2" onClick={() => this.showViewUser(data_arry._id)}>
-                        <FontAwesomeIcon icon={faEye} />
-                    </button>
-                </td> */}
+                <td><h6 className="text-dark normal">{data_arry.username}</h6></td>
+                <td><h6 className="text-dark normal">{data_arry.email}</h6></td>
+                <td><h6 className="text-dark normal">{data_arry.contact_number}</h6></td>
+                <td><h6 className="text-dark normal">{data_arry.designation}</h6></td>
+                <td><span className={`bg-${data_arry.role == 1 ? 'success' : 'info'} px-2 text-white rounded small`} >
+                    {data_arry.role == 1 ? 'Mobile' : 'Web'}</span> </td>
+               
             </tr>
         );
     }
+
+    
 }
 export default withRouter(SiteManagersAdmin);

@@ -12,15 +12,7 @@ class Loader extends Component {
   }
 
   render() {
-    if (this.props.show) {
-      return (
-        <div className="IS_Loader">
-          <img src={Spinner} alt="" />
-        </div>
-      );
-    } else {
-      return null;
-    }
+   return <></>
   }
 }
 

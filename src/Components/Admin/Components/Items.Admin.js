@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
 import {get_all_items , deleteItem } from '../../Controller/Items.controller'
-
+import moment from 'moment'
 class ItemsAdmin extends Component {
     constructor() {
         super();
@@ -49,30 +49,30 @@ class ItemsAdmin extends Component {
                     <div className="container-fluid" >
                         <div className="row">
                             <div className="col-12">
-                                <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    Items Managment
-                                {/* <span className="badge badge-success mx-2  " style={{ cursor: 'pointer' }} onClick={() => this.change_toggle()}>Add New Item</span> */}
-                                </h5>
+                                <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                    Items Management
+                                </h6>
                             </div>
                   
                             <div className="col-12">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <h5 className="text-dark bold-normal py-2 bg-white px-2">
-                                        Items List
-                                </h5>
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
+                                 
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Item ID</th>
-                                                    <th scope="col">Item Name</th>
-                                                    <th scope="col">Description</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">Actions</th>
+                                                    <th scope="col"><h6 className="header">Item ID</h6></th>
+                                                    <th scope="col"><h6 className="header">Item Name</h6></th>
+                                                    <th scope="col"><h6 className="header">Description</h6></th>
+                                                    <th scope="col"><h6 className="header">Price</h6></th>
+                                                    <th scope="col"><h6 className="header">Actions</h6></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             {itemsList.map((item) => this.renderAllItems(item))}
+                                            {!this.state.isLoaded &&
+                                            <td colSpan={6}><h6 className="text-dark normal text-center py-2">Loading...</h6></td>
+                                            }
                                             </tbody>
                                         </table>
                                     </div>
@@ -88,14 +88,17 @@ class ItemsAdmin extends Component {
     renderAllItems = (item) => {
         return (
             <tr key={item._id}>
-            <td>{item.item_id}</td>
-            <td>{item.item_name}</td>
-            <td>{item.description}</td>
-            <td>{item.price}.00</td>
+                <td><h6 className="text-dark normal">{item.item_id}</h6></td>
+                <td><h6 className="text-dark normal">{item.item_name}</h6></td>
+                <td><h6 className="text-dark normal">{item.description}</h6></td>
+                <td><h6 className="text-dark normal">{`LKR ${item.price}.00`}</h6></td>
+                
+            
+            
             <td>
-                <span onClick={() => this.deleteItem(item)} className="badge badge-info rounded-0 bg-white text-danger border border-secondary click font-weight-bold ml-2">Delete</span>
+                <span onClick={() => this.deleteItem(item)} className="badge badge-danger  click font-weight-bold ml-2">Remove</span>
             </td>
-        </tr>
+            </tr>
         );
     };
 
