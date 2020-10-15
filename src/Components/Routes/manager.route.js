@@ -75,7 +75,7 @@ let indexRoutes = [
     exact:true,
   },
   {
-    path: "/admin/approved",
+    path: "/admin/completed",
     name: "ApprovedOrders",
     component: ApprovedOrders,
     exact:true,

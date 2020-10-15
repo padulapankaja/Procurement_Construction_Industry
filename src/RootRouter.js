@@ -29,6 +29,9 @@ class App extends React.Component {
     if(checkSignedIn == true && role == 3){
      routes = [ ...managerRoutes, ...routes ];
     }
+    if(checkSignedIn == true && role == 2){
+     routes = [ ...managerRoutes, ...routes ];
+    }
 
 
     return routes;
