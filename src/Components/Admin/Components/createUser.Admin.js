@@ -127,58 +127,69 @@ class createUser extends Component {
                         {/* <Loader show={this.state.loading} /> */}
                         <div className="row">
                             <div className="col-12">
-                                <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    User Managment
-                                <span className="badge badge-success mx-2  " >Create User</span>
-                                </h5>
+                                <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                   Create New Users
+                                </h6>
                             </div>
                             <div className="col-12" >
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
-                                            <div className="col-12">
-                                                <h6 className="form-label py-2 mt-3">Name *</h6>
+                                            <div className="col-6">
+                                                <h6 className="form-label mb-2 mt-2">Username *</h6>
                                                 <input
                                                     type="text"
                                                     name="name"
-                                                    placeholder="John"
+                                                    placeholder="Enter Username"
                                                     value={name}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                            </div>
-                                            <div className="col-md-6">
-                                                
-
-                                                <h6 className="form-label py-2 mt-3">Email *</h6>
-                                                <input
-                                                    type="email"
-                                                    name="email"
-                                                    placeholder="johndoe@gmail.com"
-                                                    value={email}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-
-                                                <h6 className="form-label py-2 mt-3">Contact Number *</h6>
-                                                <input
-                                                    type="number"
-                                                    name="contactNumber"
-                                                    placeholder="07XXXXXXXX"
-                                                    value={contactNumber}
-                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                            </div>
-                                            <div className="col-md-6">
-
-                                                <h6 className="form-label py-2 mt-3">Designation  *</h6>
+                                            
+                                                    <h6 className="form-label mb-2 mt-3">Designation *</h6>
                                                     <Select name="designation"
+                                                        placeholder={'Select Designation'}
                                                         value={selectedOption}
                                                         onChange={this.handleChange}
                                                         options={options}
                                                     />
-                                               
-                                                <h6 className="form-label py-2 mt-3">Password  *</h6>
+                                                <h6 className="form-label mb-2 mt-3">Password  *</h6>
                                                 <input
                                                     type="password"
                                                     name="password"
                                                     placeholder="Automaticaly Generate and Email"
                                                     className="form-control" disabled></input>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <h6 className="form-label mb-2 mt-2">Email Address *</h6>
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    placeholder="Enter Email Address"
+                                                    value={email}
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+
+                                                <h6 className="form-label mb-2 mt-3">Contact No*</h6>
+                                                <input
+                                                    type="text"
+                                                    name="contactNumber"
+                                                    placeholder="Enter Phone No"
+                                                    value={contactNumber}
+                                                    className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
+                                               <br></br>
+                                                    <div className="d-flex mt-3">
+                                                    <button type="submit" className="font-weight-bold px-2 btn btn-dark  btn-sm bold-normal "   >
+                                                            Create User
+                                                    </button>
+                                                        <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
+                                                            Cancel
+                                                    </button>
+                                                      
+                                                    </div>
+                                            </div>
+                                            <div className="col-md-6">
+
+                                                
+                                               
+                                               
                                             </div>
                                             <div className="col-md-6">
                                                 {/* <h6 className="form-label py-2 ">Site Location *</h6> */}
@@ -200,14 +211,7 @@ class createUser extends Component {
 
                                             </div>
                                             <div className="col-md-12 mt-4">
-                                                <div className="d-flex">
-                                                    <button type="reset" onClick={() => this.clear()} className="px-2 btn btn-secondary  btn-sm bold-normal ml-auto" >
-                                                        Cancel
-                                                </button>
-                                                    <button type="submit" className="px-2 btn btn-dark  btn-sm bold-normal ml-2"   >
-                                                        Add User
-                                                </button>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </form>
