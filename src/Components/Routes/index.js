@@ -11,11 +11,11 @@ let indexRoutes = [
     component: SignIn,
     exact: true,
   },
-  {
-    path: "/*",
-    name: "SignIn",
-    component: SignIn,
-  },
+  // {
+  //   path: "/*",
+  //   name: "SignIn",
+  //   component: SignIn,
+  // },
 ];
 
 export default indexRoutes;

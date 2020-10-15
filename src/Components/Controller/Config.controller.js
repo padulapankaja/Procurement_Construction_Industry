@@ -7,8 +7,8 @@ import Axios from 'axios'
 class Config {
     constructor() {
         //backend server details
-          this.host = "http://127.0.0.1";
-          this.port = ":4000";
+          this.host = "https://procurement-backend.herokuapp.com";
+          this.port = "";
         this.password = "Default@123"
     }
     // alert show

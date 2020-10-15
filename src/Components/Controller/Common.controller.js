@@ -10,9 +10,10 @@ class Common {
     // sign in
     common_sign = (username, password) => {
         var requestData = {
-            username: username,
+            email: username,
             password: password
         }
+        console.log(requestData);
         return new Promise((resolve, reject) => {
             return Axios.post(`${Config.host}${Config.port}${this.api.signin}`, requestData)
                 .then(result => {

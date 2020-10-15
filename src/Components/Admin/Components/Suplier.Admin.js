@@ -15,13 +15,25 @@ class SupliersAdmin extends Component {
             contactNumber: '',
             email: '',
             password: Config.password,
+            address: '',
+            suppliers_arry: [],
 
         };
+        this.get_all_suppliers_func()
     }
     formValueChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
-
+    get_all_suppliers_func = async () => {
+        const res = await ADMIN.get_all_suppliers()
+        console.log(res);
+        this.setState({
+            suppliers_arry: res.data.data
+        })
+        await this.setState({
+            loading: false,
+        });
+    }
     change_toggle = () => {
         if (this.state.addSuplierState) {
             this.setState({ addSuplierState: false })
@@ -33,14 +45,21 @@ class SupliersAdmin extends Component {
         e.preventDefault()
         var data = {
             name: this.state.name,
-            contactNumber: this.state.contactNumber,
+            phoneNo: this.state.contactNumber,
             email: this.state.email,
             password: Config.password,
+            address: this.state.address
         }
         console.log(data);
-        alert(JSON.stringify(data))
-        // const result = await ADMIN.register_suppliers(data)
-        // console.log(result);
+        ADMIN.register_suppliers(data).then(response => {
+            this.get_all_suppliers_func()
+            Config.setToast("Successfully Registed")
+            this.clear()
+
+        }).catch(err => {
+            Config.setErrorToast("Someting went wrong")
+        })
+
     }
 
     clear = () => {
@@ -49,6 +68,7 @@ class SupliersAdmin extends Component {
             contactNumber: '',
             email: '',
             password: Config.password,
+            address: ''
         })
     }
     render() {
@@ -92,9 +112,9 @@ class SupliersAdmin extends Component {
                                                 <input
                                                     type="text"
                                                     name="address"
-                                                    placeholder="156/4 , Rahula RD , Galle"
+                                                    placeholder="156/4 , Example Road , Colombo"
                                                     //value={email}
-                                                    className="form-control" 
+                                                    className="form-control"
                                                     onChange={(e) => this.formValueChange(e)} required></input>
                                             </div>
                                             <div className="col-md-6">
@@ -139,28 +159,12 @@ class SupliersAdmin extends Component {
                                                 <tr>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Email</th>
-                                                    <th scope="col">Join Date</th>
                                                     <th scope="col">Address</th>
-                                                    <th scope="col">Actions</th>
+                                                    <th scope="col">Contact No</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr >
-
-                                                    <td><b>Ravi Jay</b></td>
-                                                    <td>ravijay@gmail.com</td>
-                                                    <td>{moment(new Date("2020-10-06")).format('YYYY MMM DD')}</td>
-                                                    <td>186/5 , Avenue place, Colombo 07</td>
-                                                    <td>
-                                                        <button className="btn btn-danger btn-sm px-2 mr-2">
-                                                            <FontAwesomeIcon icon={faBan} />
-                                                        </button>
-                                                        <a className="btn btn-info btn-sm px-2 mr-2" href={`mailto:samankumara@gmail.com`}  >
-                                                            <FontAwesomeIcon icon={faEnvelope} />
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                {/* {managers.map(item => this.displayAllManagers(item))} */}
+                                                {this.state.suppliers_arry && this.state.suppliers_arry.map(item => this.display_all_supliers(item))}
                                             </tbody>
                                         </table>
                                     </div>
@@ -170,6 +174,18 @@ class SupliersAdmin extends Component {
                     </div>
                 </div>
             </div>
+        );
+    }
+    display_all_supliers = data_arry => {
+        console.log(this.state.suppliers_arry);
+        return (
+            <tr key={data_arry._id}>
+                <td> {data_arry.name}</td>
+                <td> {data_arry.email}</td>
+                <td> {data_arry.address} </td>
+                <td> {data_arry.phoneNo}</td>
+
+            </tr>
         );
     }
 }

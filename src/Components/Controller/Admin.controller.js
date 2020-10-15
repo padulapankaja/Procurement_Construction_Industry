@@ -4,9 +4,11 @@ class Admin {
     constructor() {
         this.api = {
 
-            register_site_manager: "/api/users/signup",
-            register_suppliers: "/api/users/signup",
+            register_site_manager: "/api/users/register",
+            register_suppliers: "/api/suppliers/add",
             get_all_site_managers_api: "/api/users/sitemanagers",
+            get_all_site_users_api: "/api/users/all",
+            get_all_supliers_api: "/api/suppliers/get",
             add_site: "/api/sites/create",
             all_sites: "/api/sites/get_all",
         };
@@ -33,12 +35,10 @@ class Admin {
         })
     }
     register_suppliers = (data) => {
-        var requestData = {
-            data
-        }
+
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await Axios.post(`${Config.host}${Config.port}${this.api.register_suppliers}`, requestData);
+                const result = await Axios.post(`${Config.host}${Config.port}${this.api.register_suppliers}`, data);
                 resolve({ code: 200, data: result.data });
             } catch (err) {
                 reject({ code: 0, error: err });
@@ -49,6 +49,26 @@ class Admin {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_all_site_managers_api}`);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+    get_all_suppliers = () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_all_supliers_api}`);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+    get_all_site_users_details = () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_all_site_users_api}`);
                 resolve({ code: 200, data: result.data });
             } catch (err) {
                 reject({ code: 0, error: err });
