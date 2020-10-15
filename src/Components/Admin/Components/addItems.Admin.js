@@ -113,31 +113,30 @@ class AddItemsAdmin extends Component {
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <div className="row">
-                            <div className="col-12">
-                                <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                    Items Managment
-                                <span className="badge badge-success mx-2  " >Add New Item</span>
-                                </h5>
+                        <div className="col-12">
+                                <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                   Create New Items
+                                </h6>
                             </div>
                             <div className="col-12" >
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
-                                            <h6 className="form-label py-2 mt-3">Item ID *</h6>
+                                            <h6 className="form-label mb-2 mt-2">Item ID *</h6>
                                                 <input
                                                     type="text"
                                                     name="item_id"
-                                                    placeholder="#CE10023"
+                                                    placeholder="Enter Item ID"
                                                     value={item_id}
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
 
-                                                <h6 className="form-label py-2 mt-3">Description *</h6>
+                                                <h6 className="form-label mb-2 mt-3">Description *</h6>
                                                 <input
                                                     type="text"
                                                     name="description"
-                                                    placeholder="Cement with super Quality"
+                                                    placeholder="Enter Small Description"
                                                     value={description}
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
@@ -151,31 +150,31 @@ class AddItemsAdmin extends Component {
                                                
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2 mt-3">Item Name *</h6>
+                                                <h6 className="form-label mb-2 mt-2">Item Name *</h6>
                                                 <input
                                                     type="text"
                                                     name="item_name"
-                                                    placeholder="Cement"
+                                                    placeholder="Enter Item Name"
                                                     value={item_name}
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
 
-                                                   <h6 className="form-label py-2 mt-3">Price *</h6>
+                                                   <h6 className="form-label mb-2 mt-3">Price *</h6>
                                                 <input
                                                     type="text"
                                                     name="price"
-                                                    placeholder="1,800 LKR"
+                                                    placeholder="Enter Item Price"
                                                     value={price}
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
                                             </div>
                                             <div className="col-md-12 mt-4">
                                                 <div className="d-flex">
-                                                    <button type="reset" onClick={() => this.clear()} className="px-2 btn btn-secondary  btn-sm bold-normal ml-auto" >
-                                                        Cancel
-                                                </button>
-                                                    <button type="submit" className="px-2 btn btn-dark  btn-sm bold-normal ml-2"   >
+                                                    <button type="submit" className="font-weight-bold px-2 btn btn-dark  btn-sm bold-normal"   >
                                                         Add New Item
+                                                </button>
+                                                    <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
+                                                        Cancel
                                                 </button>
                                                 </div>
                                             </div>
