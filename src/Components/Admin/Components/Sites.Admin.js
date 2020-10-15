@@ -49,12 +49,14 @@ class Sites extends Component {
         }
         ADMIN.add_site(data).then(result => {
             console.log(result);
-            Config.setToast("Successfully Registed")
-            this.props.history.push("/admin/sites");
+            this.clear()
+            this.get_all_sites()
+            Config.setToast("Successfully Added")
+
         }).catch(err => {
             console.log(err);
             Config.setErrorToast("Someting went wrong")
-            this.props.history.push("/admin/sites");
+
         })
 
     }
@@ -65,16 +67,26 @@ class Sites extends Component {
         })
     }
     get_all_site_managers = async () => {
-        const res = await ADMIN.get_all_site_managers()
-        console.log(res);
-        await this.setState({
-            site_managers_arry: res.data.data,
-        })
-        await this.renderOptions()
-        await this.setState({
-            loading: false,
+        ADMIN.get_all_site_managers().then(response => {
 
-        });
+            console.log(response.data.data);
+            this.setState({
+                site_managers_arry: response.data.data,
+            })
+            console.log(this.state.site_managers_arry);
+
+        }).then(res => {
+            this.renderOptions()
+            console.log(this.state.site_managers_arry);
+
+        }).then(res => {
+
+            this.setState({
+                loading: false,
+
+            });
+        })
+
     }
 
     get_all_sites = () => {
@@ -86,8 +98,9 @@ class Sites extends Component {
             console.log(err);
         })
     }
-    renderOptions() {
 
+    renderOptions() {
+        console.log(this.state.site_managers_arry);
         return this.state.site_managers_arry.filter(user => user.site_code == "").map((dt, i) => {
             return (<option className="form-control" value={dt._id}> {dt.username}</option>)
         });
@@ -98,10 +111,9 @@ class Sites extends Component {
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"sitemanagers"} />
-
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
-                        <Loader show={this.state.loading} />
+                        {/* <Loader show={this.state.loading} /> */}
                         <div className="row">
                             <div className="col-12">
                                 <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
@@ -137,6 +149,7 @@ class Sites extends Component {
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required>
                                                     <option className="form-control" value=""> Select Site Manager</option>
                                                     {this.renderOptions()}
+
                                                 </select>
                                             </div>
                                             <div className="col-md-12 mt-4">
