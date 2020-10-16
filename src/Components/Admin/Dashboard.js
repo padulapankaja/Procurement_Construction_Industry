@@ -1,5 +1,5 @@
+      /*  eslint-disable */
 import React, { Component } from 'react';
-
 import SideBar from '../Common/Sidebar'
 import { Line as LineChart, Bar, Doughnut } from 'react-chartjs-2';
 import moment from 'moment'
@@ -12,15 +12,18 @@ import img_sites from '../asserts/img/build.png'
 import img_pending from '../asserts/img/pen.png'
 import img_delivery from '../asserts/img/delivery.png'
 import img_construction from '../asserts/img/construction.png'
-
+import Config from '../Controller/Config.controller'
 import AdminController from '../Controller/Admin.controller'
+import { gettotal, render_state, current_state, state_color } from '../Controller/Util.controller'
+
 class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
             counts: null,
             loading: true,
-            monthwise:null
+            monthwise: null,
+            orders: [],
         };
 
 
@@ -29,7 +32,7 @@ class Dashboard extends Component {
 
     componentDidMount = async () => {
 
-  await       AdminController.get_all_stats().then(response => {
+        await AdminController.get_all_stats().then(response => {
             console.log(response.data.data);
             this.setState({
                 counts: response.data.data,
@@ -41,9 +44,9 @@ class Dashboard extends Component {
 
     }
 
-    get_data_filteration = ()=>{
+    get_data_filteration = () => {
         this.setState({
-            loading:true
+            loading: true
         })
         AdminController.get_all_stats_by_months().then(response => {
             console.log(response.data.data);
@@ -53,11 +56,26 @@ class Dashboard extends Component {
             })
             console.log(this.state.monthwise);
         })
-    
+
+        AdminController.get_all_orders()
+            .then(result => {
+                this.setState({
+                    loading: false,
+                    orders: result.data.data.filter(i => i.current_state != 0 && i.current_state != 5)
+                })
+
+                console.log("------------------");
+                console.log(this.state.orders)
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ loading: false })
+            })
+
     }
 
     render() {
-        const { counts } = this.state
+        const { counts, orders, loading } = this.state
         return (
 
             <div className="bg-light wd-wrapper">
@@ -213,32 +231,26 @@ class Dashboard extends Component {
                                     <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 mx-2">
                                         {/* <h6 className="text-muted bold-normal px-2 mb-0">  2020  </h6> */}
                                         <h5 className="text-dark bold-normal px-2 pt-1 pb-3 ">  Recent Orders </h5>
-                                        <div className="table-responsive px-3">
+                                        <div className="table-responsive px-2">
                                             <table className="table table-stripped">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">No.Items</th>
-                                                        <th scope="col">Site Location</th>
-                                                        {/* <th scope="col">Actions</th> */}
+                                                        <th scope="col"><h6 className="header">Delivery Date</h6></th>
+                                                        <th scope="col"><h6 className="header">No.Items</h6></th>
+                                                        <th scope="col"><h6 className="header">Total</h6></th>
+                                                        <th scope="col"><h6 className="header">Current State</h6></th>
+                                                        <th scope="col"><h6 className="header">Actions</h6></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>{moment(new Date("2020-10-06")).format('YYYY MMM DD')}</td>
-                                                        <td>05</td>
-                                                        <td>Galle - Main Street(GL05)</td>
-                                                        {/* <td> */}
-                                                        {/* <Link to="/admin/orders/1">
-                                                            <button className="btn btn-success btn-sm px-2 mr-2">
-                                                                <FontAwesomeIcon icon={faEye} />
-                                                            </button>
-                                                        </Link> */}
-                                                        {/* <a className="btn btn-info btn-sm px-2 mr-2" href={`mailto:samankumara@gmail.com`}  >
-                                                            <FontAwesomeIcon icon={faEnvelope} />
-                                                        </a> */}
-                                                        {/* </td> */}
-                                                    </tr>
+                                                    {orders && orders
+                                                        .sort((a, b) => parseInt(a.current_state) - parseInt(b.current_state))
+                                                        .map((item, i) => this.display(item, i)).splice(0,5)
+                                                    }
+
+                                                    {loading &&
+                                                        <td colSpan={5}><h6 className="text-dark normal text-center py-2">Loading...</h6></td>
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -249,6 +261,27 @@ class Dashboard extends Component {
                     </div>
                     : ''}
             </div>
+        );
+    }
+
+    display = (row, i) => {
+        return (
+            <tr key={row._id}>
+                <td><h6 className="text-dark normal">{moment(row.date).format('LL')}</h6></td>
+                <td><h6 className="text-dark normal">{("0" + (row.items.length)).slice(-2)}</h6></td>
+                <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(gettotal(row.items))}.00`}</h6></td>
+                <td><span className={`mr small rounded py-1 px-2 ${state_color(row.current_state)}`}>
+                    {current_state(row.current_state)}
+                </span>
+                </td>
+                <td>
+                    <Link to={`/admin/orders/${row._id}`}>
+                        <span className=" rounded py-1 px-2 bg-success text-white">
+                            <FontAwesomeIcon icon={faEye} className="mr-1" /> Details
+                    </span>
+                    </Link>
+                </td>
+            </tr>
         );
     }
     getStyle = (item) => {
@@ -342,6 +375,8 @@ const options2 = {
         }]
     }
 }
+
+
 const mapStateToProps = (state) => ({
     auth: state.auth || {},
 });

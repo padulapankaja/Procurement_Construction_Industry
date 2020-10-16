@@ -1,5 +1,5 @@
+      /*  eslint-disable */
 import React, { Component } from "react";
-
 import "../asserts/loading.css";
 
 // spinner

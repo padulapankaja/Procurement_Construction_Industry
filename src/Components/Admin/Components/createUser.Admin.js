@@ -1,3 +1,4 @@
+      /*  eslint-disable */
 import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
