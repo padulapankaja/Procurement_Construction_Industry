@@ -4,13 +4,8 @@ import { BrowserRouter as Router, Route, Switch, useHistory, withRouter } from '
 import { connect} from 'react-redux'
 import indexRoutes from './Components/Routes/index'
 import managerRoutes from './Components/Routes/manager.route'
-
-// {
-//     "site_manager": 1,
-//     "accountant": 2,
-//     "management": 3,
-//     "supplier": 0
-// }
+import accountantRoutes from './Components/Routes/accountant.route'
+import suplierRoutes from './Components/Routes/suplier.route'
 
 
 class App extends React.Component {
@@ -29,11 +24,14 @@ class App extends React.Component {
     if(checkSignedIn == true && role == 3){
      routes = [ ...managerRoutes, ...routes ];
     }
+
     if(checkSignedIn == true && role == 2){
-     routes = [ ...managerRoutes, ...routes ];
+     routes = [ ...accountantRoutes, ...routes ];
     }
 
-
+    if(checkSignedIn == true && role == 0){
+     routes = [ ...suplierRoutes, ...routes ];
+    }
     return routes;
   } 
 

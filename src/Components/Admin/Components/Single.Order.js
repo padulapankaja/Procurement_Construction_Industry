@@ -74,6 +74,11 @@ class SingleOrder extends Component {
             cm = 'Management Approved'
         }
 
+        if(role == 0){
+            state = 4
+            cm = 'Supplier Approved'
+        }
+
         this.Submit({
             id : id ,
             state : {
@@ -117,7 +122,6 @@ class SingleOrder extends Component {
                             <div className="col-12">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
                                     Order Details 
-                                    {JSON.stringify(auth.user.role)}
                                 </h6>
                             </div>
                             { loading && <div className="col-12">
@@ -328,6 +332,32 @@ class SingleOrder extends Component {
 
                                     </div>
                                 </div>}
+                                {/* ----------------------------------------------------- */}
+                                { auth.user.role == 0 && item.current_state == 3 &&  
+                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
+                                   
+                                    <div className="col-12 pb-2 mt-2" >
+                                        <h6 className="text-dark bold-normal py-2 px-2 mb-0 normal ">
+                                        Supplier approval need to procceed. Adding a comment is optional</h6>
+                                        <textarea 
+                                            rows={2}
+                                            value={comment}
+                                            onChange={(e) => this.setState({comment : e.target.value})}
+                                            placeholder={'Add a note to check others'}
+                                            className="form-control mx-2 w-75 mt-1">    
+                                        </textarea>
+                                        <div className="mx-2 mt-2" >
+                                        <button 
+                                            onClick={this.Approve}
+                                            className="btn btn-sm btn-success mr-2">Approve</button>
+                                        <button 
+                                            onClick={this.Reject}
+                                            className="btn btn-sm btn-danger">Reject</button>
+                                        </div>
+
+                                    </div>
+                                </div>}
+                                {/* ----------------------------------------------------- */}
                             </div>
                             <div className="col-3">
                                 <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">

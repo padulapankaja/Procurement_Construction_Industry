@@ -14,10 +14,6 @@ import RejectedOrders from '../Orders/reject.order';
 import PendingOrders from '../Orders/pending.order';
 
 
-
-
-
-
 let indexRoutes = [
 
   {

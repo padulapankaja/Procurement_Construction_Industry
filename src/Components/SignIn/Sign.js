@@ -57,7 +57,7 @@ class SignIn extends Component {
                             </div>
                             <form className="login100-form validate-form" onSubmit={(e) => this.onSubmit(e)}>
                                 <span className="login100-form-title">
-                                    Member Login
+                                Procurement Sign In
                             </span>
                                 <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                                     <input className="input100" type="text" name="username" value={username} placeholder="Enter Username" onChange={(e) => this.formValueChange(e)} required />
