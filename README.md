@@ -1,8 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This case study deals with the difficulties faced with the procurement procedures within the construction industry due to its inherently distributed environment. It is specifically targeted at small and medium sized site works. In this case study, your teams are bidding to SLIIT Software Development unit, for the contract to develop software to provide mobile procurement systems in the construction industry.
 
-## Available Scripts
 
-In the project directory, you can run:
+
 
 ### `npm start`
 
