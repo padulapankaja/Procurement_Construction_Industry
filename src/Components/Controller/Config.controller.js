@@ -29,6 +29,10 @@ class Config {
         return `${this.host}${this.port}/${url.replace(/\\/g, '/')}`
     }
 
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     setToast(msg) {
         toast(msg, {
             hideProgressBar: true,
