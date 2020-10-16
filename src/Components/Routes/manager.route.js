@@ -87,7 +87,7 @@ let indexRoutes = [
     exact:true,
   },
   {
-    path: "/admin/orders/1",
+    path: "/admin/orders/:id",
     name: "SingleOrder",
     component: SingleOrder,
     exact: true,

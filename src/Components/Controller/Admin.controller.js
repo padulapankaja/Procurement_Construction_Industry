@@ -9,7 +9,10 @@ class Admin {
             get_all_site_managers_api: "/api/users/sitemanagers",
             get_all_site_users_api: "/api/users/all",
             get_all_supliers_api: "/api/suppliers/get",
+            get_all_orders: "/api/orders/get_all",
+            get_single_order: "/api/orders/get_one/",
             add_site: "/api/sites/create",
+            update_state : "/api/orders/update_state",
             all_sites: "/api/sites/get_all",
         };
     }
@@ -75,6 +78,26 @@ class Admin {
             }
         })
     }
+    get_all_orders = () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_all_orders}`);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+    get_single_order = (id) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_single_order}${id}` , );
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
     get_all_sites = () => {
         return new Promise(async (resolve, reject) => {
             try {
@@ -93,6 +116,17 @@ class Admin {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await Axios.post(`${Config.host}${Config.port}${this.api.add_site}`, requestData);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+
+    update_state = (data) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.patch(`${Config.host}${Config.port}${this.api.update_state}`, data);
                 resolve({ code: 200, data: result.data });
             } catch (err) {
                 reject({ code: 0, error: err });

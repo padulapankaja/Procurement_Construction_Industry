@@ -33,3 +33,50 @@ span {
 a:hover {
   text-decoration: none !important;
 }
+
+.state2  {
+  background-color: #5F61BD !important;
+}
+.state3  {
+  background-color: #F3661E !important;
+}
+.state4  {
+  background-color: #3CC49F !important;
+}
+
+.bg-white2{
+  background-color:  #e6e6e6 !important;
+}
+
+.xx01{
+  border : 1px solid #007bff!important;
+  color : #007bff!important;
+  font-weight: 600 !important;
+}
+.xx02{
+  border : 1px solid #5F61BD!important;
+  color : #5F61BD!important;
+  font-weight: 600 !important;
+}
+.xx03{
+  border : 1px solid #F3661E!important;
+  color : #F3661E!important;
+  font-weight: 600 !important;
+}
+.xx04{
+  border : 1px solid #3CC49F!important;
+  color : #3CC49F!important;
+  font-weight: 600 !important;
+}
+
+.xx05{
+  border : 1px solid #1e7e34!important;
+  color : #1e7e34!important;
+  font-weight: 600 !important;
+}
+
+.xx00{
+  border : 1px solid #bd2130 !important;
+  color : #bd2130!important;
+  font-weight: 600 !important;
+}
