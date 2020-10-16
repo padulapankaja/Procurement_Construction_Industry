@@ -122,14 +122,14 @@ class CompletedOrders extends Component {
                  <td><h6 className="text-dark normal">{moment(row.date).format('LL')}</h6></td>
                  <td><h6 className="text-dark normal">{("0" + (row.items.length)).slice(-2)}</h6></td>
                  <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(this.gettotal(row.items))}.00`}</h6></td>
-                 <td><span className={`mr small rounded py-1 px-2 text-white ${this.state_color(row.current_state)}`}>
+                 <td><span className={` small rounded py-1 px-2 ${this.state_color(row.current_state)}`}>
                         {this.current_state(row.current_state)}
                     </span>
                 </td>
                  <td>
                      <Link to={`/admin/orders/${row._id}`}>
-                    <span className="mr small rounded py-1 px-2 text-white bg-success">
-                    <FontAwesomeIcon icon={faEye} className="mr-1"/> More
+                    <span className=" rounded py-1 px-2 bg-success text-white">
+                    <FontAwesomeIcon icon={faEye} className="mr-1"/> Details
                     </span>
                     </Link>
                  </td>
@@ -171,12 +171,12 @@ class CompletedOrders extends Component {
 
     state_color = (status) => {
         switch(parseInt(status)){
-            case 0 : return 'bg-danger' 
-            case 1 : return 'bg-info' 
-            case 2 : return  'state2'
-            case 3 : return  'state3'
-            case 4 : return  'state4'
-            case 5 : return  'bg-success'
+            case 0 : return "xx00"  
+            case 1 : return "xx01" 
+            case 2 : return "xx02"  
+            case 3 : return "xx03"  
+            case 4 : return "xx04"  
+            case 5 : return "xx05"  
           }
     }
   
