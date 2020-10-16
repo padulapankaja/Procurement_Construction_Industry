@@ -116,9 +116,9 @@ class OrderAdmin extends Component {
                                                     <td>Galle - Main Street(GL05)</td>
                                                     <td>
                                                         <Link to="/admin/orders/1">
-                                                        <button className="btn btn-success btn-sm px-2 mr-2">
-                                                            <FontAwesomeIcon icon={faEye} />
-                                                        </button>
+                                                            <button className="btn btn-success btn-sm px-2 mr-2">
+                                                                <FontAwesomeIcon icon={faEye} />
+                                                            </button>
                                                         </Link>
                                                         {/* <a className="btn btn-info btn-sm px-2 mr-2" href={`mailto:samankumara@gmail.com`}  >
                                                             <FontAwesomeIcon icon={faEnvelope} />
@@ -129,7 +129,7 @@ class OrderAdmin extends Component {
                                         </table>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
