@@ -6,6 +6,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
+import {gettotal , render_state , current_state , state_color} from '../Controller/Util.controller'
 
 class PendingOrders extends Component {
     constructor() {
@@ -121,9 +122,9 @@ class PendingOrders extends Component {
             <tr key={row._id}>
                  <td><h6 className="text-dark normal">{moment(row.date).format('LL')}</h6></td>
                  <td><h6 className="text-dark normal">{("0" + (row.items.length)).slice(-2)}</h6></td>
-                 <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(this.gettotal(row.items))}.00`}</h6></td>
-                 <td><span className={`mr small rounded py-1 px-2 ${this.state_color(row.current_state)}`}>
-                        {this.current_state(row.current_state)}
+                 <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(gettotal(row.items))}.00`}</h6></td>
+                 <td><span className={`mr small rounded py-1 px-2 ${state_color(row.current_state)}`}>
+                        {current_state(row.current_state)}
                     </span>
                 </td>
                  <td>

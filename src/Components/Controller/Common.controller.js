@@ -13,7 +13,6 @@ class Common {
             email: username,
             password: password
         }
-        console.log(requestData);
         return new Promise((resolve, reject) => {
             return Axios.post(`${Config.host}${Config.port}${this.api.signin}`, requestData)
                 .then(result => {

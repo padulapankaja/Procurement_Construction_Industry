@@ -30,7 +30,14 @@ class SignIn extends Component {
             console.log(response.data.data);
             if(response.code == 200){
                 this.props.setCurrentUser(response.data.data);
-                this.props.history.push("/admin/dashboard");
+                if(response.data.data.role == 0 ){
+                     this.props.history.push("/admin/pending");
+                }else if(response.data.data.role == 1 ){
+                    this.props.history.push("/");
+                }else{
+                     this.props.history.push("/admin/dashboard");
+                }
+               
             }
         }).catch(err =>{
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
-
+import {gettotal , render_state , current_state , state_color} from '../Controller/Util.controller'
 class SupplierPending extends Component {
     constructor() {
         super();
@@ -106,9 +106,9 @@ class SupplierPending extends Component {
             <tr key={row._id}>
                  <td><h6 className="text-dark normal">{moment(row.date).format('LL')}</h6></td>
                  <td><h6 className="text-dark normal">{("0" + (row.items.length)).slice(-2)}</h6></td>
-                 <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(this.gettotal(row.items))}.00`}</h6></td>
-                 <td><span className={`mr small rounded py-1 px-2 ${this.state_color(row.current_state)}`}>
-                        {this.current_state(row.current_state)}
+                 <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(gettotal(row.items))}.00`}</h6></td>
+                 <td><span className={`mr small rounded py-1 px-2 ${state_color(row.current_state)}`}>
+                        {current_state(row.current_state)}
                     </span>
                 </td>
                  <td>
@@ -122,48 +122,6 @@ class SupplierPending extends Component {
         );
     }
 
-    gettotal = (items = []) => {
-        return items.reduce( (acc,current) => {
-          if(current.item && current.item.price && current.quantity){
-              return acc + (current.item.price * current.quantity)
-          }else{
-            return acc
-          }
-        },0)
-      }
-
-    render_state = (status) => {
-        switch(parseInt(status.state)){
-            case 0 : return  <span className="mr-1 small rounded xx00 ">{status.comment}</span>
-            case 1 : return  <span className="mr-1 small rounded xx01 ">{status.comment}</span>
-            case 2 : return  <span className="mr-1 small rounded xx02 ">{status.comment}</span> 
-            case 3 : return  <span className="mr-1 small rounded xx03 ">{status.comment}</span> 
-            case 4 : return  <span className="mr-1 small rounded xx04 ">{status.comment}</span>
-            case 5 : return  <span className="mr-1 small rounded xx05 ">{status.comment}</span>
-          }
-    }
-
-    current_state = (status) => {
-        switch(parseInt(status)){
-            case 0 : return 'Rejected' 
-            case 1 : return 'Order Placed' 
-            case 2 : return  'Accountant Approved'
-            case 3 : return  'Management Approved'
-            case 4 : return  'Supplier Approved'
-            case 5 : return  'Delivered'
-          }
-    }
-
-    state_color = (status) => {
-        switch(parseInt(status)){
-            case 0 : return "xx00"  
-            case 1 : return "xx01" 
-            case 2 : return "xx02"  
-            case 3 : return "xx03"  
-            case 4 : return "xx04"  
-            case 5 : return "xx05"  
-          }
-    }
   
 }
 
