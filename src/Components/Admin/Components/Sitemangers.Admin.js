@@ -1,3 +1,4 @@
+      /*  eslint-disable */
 import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
@@ -8,6 +9,8 @@ import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-s
 import { withRouter } from 'react-router-dom'
 import Loader from '../Loading'
 import { Modal } from 'react-bootstrap';
+import { connect } from "react-redux";
+
 class SiteManagersAdmin extends Component {
     constructor() {
         super();
@@ -59,6 +62,7 @@ class SiteManagersAdmin extends Component {
 
     render() {
         const { name, contactNumber, email, site_code, site_location, viewUser } = this.state
+        const auth_role = this.props.auth.user.role;
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"sitemanagers"} />
@@ -166,4 +170,8 @@ class SiteManagersAdmin extends Component {
 
     
 }
-export default withRouter(SiteManagersAdmin);
+
+const mapStateToProps = (state) => ({
+    auth: state.auth || {},
+});
+export default connect(mapStateToProps, null)(withRouter(SiteManagersAdmin));

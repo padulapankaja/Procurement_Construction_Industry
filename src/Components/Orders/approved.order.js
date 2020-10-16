@@ -1,3 +1,4 @@
+      /*  eslint-disable */
 import React, { Component } from 'react';
 import SideBar from '../Common/Sidebar'
 import Config from '../Controller/Config.controller'
@@ -6,41 +7,43 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
-import {gettotal , render_state , current_state , state_color} from '../Controller/Util.controller'
+import { gettotal, render_state, current_state, state_color } from '../Controller/Util.controller'
 
 class CompletedOrders extends Component {
     constructor() {
         super();
         this.state = {
-            orders : [],
-            loading : true,
+            orders: [],
+            loading: true,
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         ADMIN.get_all_orders()
-        .then( result => {
-            this.setState({ loading : false ,
-                orders : result.data.data.filter(i => i.current_state == 0 || i.current_state == 5) })
-        })
-        .catch( err => {
-            console.log(err);
-            this.setState({loading : false})
-        })
+            .then(result => {
+                this.setState({
+                    loading: false,
+                    orders: result.data.data.filter(i => i.current_state == 0 || i.current_state == 5)
+                })
+            })
+            .catch(err => {
+                console.log(err);
+                this.setState({ loading: false })
+            })
     }
 
     render() {
-        const { orders , loading} = this.state
+        const { orders, loading } = this.state
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"Completed"} />
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <div className="row">
-                        <div className="col-12">
+                            <div className="col-12">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
-                                  Completed Orders {orders.length > 0 && 
-                                  <span className="mx-1 badge badge-primary">{("0" + (orders.length)).slice(-2)}</span>}
+                                    Completed Orders {orders.length > 0 &&
+                                        <span className="mx-1 badge badge-primary">{("0" + (orders.length)).slice(-2)}</span>}
                                 </h6>
                             </div>
                             {/* <div className="col-12">
@@ -97,8 +100,8 @@ class CompletedOrders extends Component {
                                             </thead>
                                             <tbody>
                                                 {orders && orders
-                                                        .sort((a,b) => parseInt(a.current_state) -  parseInt(b.current_state))
-                                                        .map((item,i) => this.display(item,i))
+                                                    .sort((a, b) => parseInt(a.current_state) - parseInt(b.current_state))
+                                                    .map((item, i) => this.display(item, i))
                                                 }
 
                                                 {loading &&
@@ -108,7 +111,7 @@ class CompletedOrders extends Component {
                                         </table>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -117,28 +120,28 @@ class CompletedOrders extends Component {
         );
     }
 
-    display = (row,i) => {
+    display = (row, i) => {
         return (
             <tr key={row._id}>
-                 <td><h6 className="text-dark normal">{moment(row.date).format('LL')}</h6></td>
-                 <td><h6 className="text-dark normal">{("0" + (row.items.length)).slice(-2)}</h6></td>
-                 <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(gettotal(row.items))}.00`}</h6></td>
-                 <td><span className={` small rounded py-1 px-2 ${state_color(row.current_state)}`}>
-                        {current_state(row.current_state)}
-                    </span>
+                <td><h6 className="text-dark normal">{moment(row.date).format('LL')}</h6></td>
+                <td><h6 className="text-dark normal">{("0" + (row.items.length)).slice(-2)}</h6></td>
+                <td><h6 className="text-dark normal">{`LKR ${Config.numberWithCommas(gettotal(row.items))}.00`}</h6></td>
+                <td><span className={` small rounded py-1 px-2 ${state_color(row.current_state)}`}>
+                    {current_state(row.current_state)}
+                </span>
                 </td>
-                 <td>
-                     <Link to={`/admin/orders/${row._id}`}>
-                    <span className=" rounded py-1 px-2 bg-success text-white">
-                    <FontAwesomeIcon icon={faEye} className="mr-1"/> Details
+                <td>
+                    <Link to={`/admin/orders/${row._id}`}>
+                        <span className=" rounded py-1 px-2 bg-success text-white">
+                            <FontAwesomeIcon icon={faEye} className="mr-1" /> Details
                     </span>
                     </Link>
-                 </td>
+                </td>
             </tr>
         );
     }
 
-    
-  
+
+
 }
 export default CompletedOrders;

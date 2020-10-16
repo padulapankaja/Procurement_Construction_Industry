@@ -12,7 +12,7 @@ class Admin {
             get_all_orders: "/api/orders/get_all",
             get_single_order: "/api/orders/get_one/",
             add_site: "/api/sites/create",
-            update_state : "/api/orders/update_state",
+            update_state: "/api/orders/update_state",
             all_sites: "/api/sites/get_all",
             all_stats: "/api/stats/all",
             by_month: "/api/stats/latest",
@@ -93,7 +93,7 @@ class Admin {
     get_single_order = (id) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_single_order}${id}` , );
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_single_order}${id}`,);
                 resolve({ code: 200, data: result.data });
             } catch (err) {
                 reject({ code: 0, error: err });

@@ -1,5 +1,5 @@
+      /*  eslint-disable */
 import React, { Component } from 'react';
-
 import '../asserts/signin/css/main.css'
 import '../asserts/signin/css/util.css'
 import img_1 from '../asserts/signin/img/img-01.png'
