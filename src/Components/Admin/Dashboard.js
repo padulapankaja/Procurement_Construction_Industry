@@ -23,6 +23,7 @@ class Dashboard extends Component {
             loading: true,
             monthwise: null,
             orders: [],
+            main_loading : true ,
             dates: [],
             no_of_orders: []
         };
@@ -40,59 +41,87 @@ class Dashboard extends Component {
         this.setState({
             loading: true
         })
-        // AdminController.get_all_stats_by_months().then(response => {
-        //     this.setState({
-        //         monthwise: response.data.data,
-        //         loading: false
-        //     })
-        // })
+        
         AdminController.get_all_orders()
             .then(result => {
                 this.setState({
                     loading: false,
-                    orders: result.data.data.filter(i => i.current_state != 0 && i.current_state != 5)
+                    orders: result.data.data
                 })
             })
             .catch(err => {
                 this.setState({ loading: false })
             })
         AdminController.get_recent_details().then(response => {
+            var m_today = moment( new Date() ).format("YYYY-MM-DD");
+            var today = new Date(m_today ); 
+            var prev =  new Date(moment(m_today, "YYYY-MM-DD").subtract(7 ,'days').format("YYYY-MM-DD") );
+            var orders = response.data.data;
+            let dataset = [];
+
+            for(var arr=[],dt= prev ; dt<= today; dt.setDate(dt.getDate()+1)){ 
+            
+                let c = new Date(dt);
+                let numberoforders = 0;
+                let find = orders.findIndex( item => item.date === moment(c).format('YYYY-MM-DD'))
+                if(find >= 0 ){
+                    numberoforders = orders[find].numberoforders;
+                }
+    
+                dataset.push({
+                   date : moment(c).format('MMM-DD'),
+                   numberoforders : numberoforders   
+                })
+    
+              }
+            
             this.setState({
                 loading: false,
-                dates: response.data.data.map(function (val) {
+                dates: dataset.map(function (val) {
                     return val.date;
                 }),
-                no_of_orders: response.data.data.map(function (val) {
+                no_of_orders: dataset.map(function (val) {
                     return val.numberoforders;
                 }),
             })
         }).catch(err => {
             this.setState({ loading: false })
         })
+
+        this.setState({main_loading : false})
     }
     render() {
-        const { counts, orders, loading } = this.state
+        const { counts, orders, loading ,main_loading} = this.state
         return (
 
             <div className="bg-light wd-wrapper">
                 <SideBar active={"dashboard"} />
-                { this.state.loading == false ?
+                
                     <div className="wrapper-wx" >
                         <div className="container-fluid" >
                             <div className="row mx-1">
                                 <div className="col-12 px-0">
-                                    <h5 className="text-dark bold-normal py-2 bg-white shadow-sm px-2 mt-3 rounded">
-                                        {this.setGreeting()}
-                                    </h5>
+                                    <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
+                                    System Overview
+                                    </h6>
                                 </div>
+                                { main_loading && 
+                                <div className="col-12 px-0">
+                                    <h6 className="text-dark bold-normal py-2 bg-white shadow-sm px-3 mt-2 rounded text-center">
+                                        Loading...
+                                    </h6>
+                                </div>
+                                }
+                                { !main_loading && 
+                                <>
                                 <div className={`col-lg-2 col-md-3 col-sm-4 col-6 pl-0 pr-2`} >
                                     <div className={cardstyle}>
                                         <div className="pl-3 pr-0 my-auto">
                                             <img src="http://fashi.lucidex.tech/images/default/admin.Users.png" className="sidebar-image"></img>
                                         </div>
                                         <div className="my-auto">
-                                            <h6 className="text-secondary bold-normal pr-2">Users </h6>
-                                            <h3 className="text-dark bold-normal pr-2">{counts.user_count}</h3>
+                                            <h6 className="mb-0 text-secondary bold-normal pr-2">Users </h6>
+                                            <h3 className="mb-0 text-dark bold-normal pr-2">{("0" + (counts.user_count)).slice(-2)}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -102,8 +131,8 @@ class Dashboard extends Component {
                                             <img src="http://fashi.lucidex.tech/images/default/admin.Managers.png" className="sidebar-image"></img>
                                         </div>
                                         <div className="my-auto">
-                                            <h6 className="text-secondary bold-normal pr-2">Suppliers </h6>
-                                            <h3 className="text-dark bold-normal pr-2">{counts.supplier_count}</h3>
+                                            <h6 className="mb-0 text-secondary bold-normal pr-2">Suppliers </h6>
+                                            <h3 className="mb-0 text-dark bold-normal pr-2">{("0" + (counts.supplier_count)).slice(-2)}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -113,8 +142,8 @@ class Dashboard extends Component {
                                             <img src={img_pending} className="sidebar-image"></img>
                                         </div>
                                         <div className="my-auto">
-                                            <h6 className="text-secondary bold-normal pr-2"> Pending Orders</h6>
-                                            <h3 className="text-dark bold-normal pr-2">{counts.pending_orders}</h3>
+                                            <h6 className="mb-0 text-secondary bold-normal pr-2">Pending</h6>
+                                            <h3 className="mb-0 text-dark bold-normal pr-2">{("0" + (counts.pending_orders)).slice(-2)}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -124,8 +153,8 @@ class Dashboard extends Component {
                                             <img src={img_delivery} className="sidebar-image"></img>
                                         </div>
                                         <div className="my-auto">
-                                            <h6 className="text-secondary bold-normal pr-2"> Completed Orders</h6>
-                                            <h3 className="text-dark bold-normal pr-2">{counts.completed_orders}</h3>
+                                            <h6 className="mb-0 text-secondary bold-normal pr-2">Completed</h6>
+                                            <h3 className="mb-0 text-dark bold-normal pr-2">{("0" + (counts.completed_orders)).slice(-2)}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -135,74 +164,82 @@ class Dashboard extends Component {
                                             <img src={img_sites} className="sidebar-image"></img>
                                         </div>
                                         <div className="my-auto">
-                                            <h6 className="text-secondary bold-normal pr-2"> Sites</h6>
-                                            <h3 className="text-dark bold-normal pr-2">{counts.site_count}</h3>
+                                            <h6 className="mb-0 text-secondary bold-normal pr-2">Sites</h6>
+                                            <h3 className="mb-0 text-dark bold-normal pr-2">{("0" + (counts.site_count)).slice(-2)}</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`col-lg-2 col-md-3 col-sm-4 col-6 pl-0 pr-2`} >
+                                <div className={`col-lg-2 col-md-3 col-sm-4 col-6 pl-0 pr-0`} >
                                     <div className={cardstyle}>
                                         <div className="pl-3 pr-0 my-auto">
                                             <img src={img_construction} className="sidebar-image"></img>
                                         </div>
                                         <div className="my-auto">
-                                            <h6 className="text-secondary bold-normal pr-2"> Items</h6>
-                                            <h3 className="text-dark bold-normal pr-2">{counts.item_count}</h3>
+                                            <h6 className="mb-0 text-secondary bold-normal pr-2"> Items</h6>
+                                            <h3 className="mb-0 text-dark bold-normal pr-2">{("0" + (counts.item_count)).slice(-2)}</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-7 px-0" >
-                                    <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 mx-2">
-                                        <h5 className="text-dark bold-normal px-2 pt-1 pb-3 ">  Orders </h5>
+                                <div className="col-8 px-0 mb-2" >
+                                    <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-0 mr-2 h-100">
+                                     <h6 className="text-dark bold-normal px-3 py-1 ">Orders Count<span className="badge badge-primary ml-2">Last 7 Days</span></h6>
+                                         <div className="px-3 pt-2 pb-0" >
                                         <LineChart data={{
                                             labels: this.state.dates,
                                             datasets: [
                                                 {
                                                     label: "Revenue",
-                                                    backgroundColor: 'rgba(26, 188, 156,0.5)',
-                                                    borderColor: 'rgba(39, 174, 96,0.4)',
+                                                    backgroundColor: '#3498db80',
+                                                    borderColor: '#3498dbBF',
                                                     data: this.state.no_of_orders
                                                 }
                                             ]
                                         }}
-                                            options={options2} width={12} height={3} />
-                                    </div>
-                                </div>
-                                <div className="col-5 px-0" >
-                                    <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 px-2">
-                                        <div className="campaign ct-charts px-3">
-                                            <h5 className="text-dark bold-normal px-2 pt-1 pb-3 ">  Orders Status</h5>
-                                            <Doughnut data={{
-                                                labels: [
-                                                    'Pending',
-                                                    'Completed',
-                                                ],
-                                                datasets: [
-                                                    {
-                                                        label: "Users",
-                                                        backgroundColor: [
-                                                            '#4FC3F7',
-                                                            'rgba(184, 233, 148,1.0)',
-                                                            'rgba(144, 164, 174,1.0)',
-
-                                                        ],
-                                                        hoverBackgroundColor: [
-                                                            '#4FC3F7',
-                                                            'rgba(184, 233, 148,1.0)',
-                                                            'rgba(144, 164, 174,1.0)',
-                                                        ],
-                                                        data: [counts.pending_orders, counts.completed_orders]
-                                                    }
-                                                ]
-                                            }}
-                                                width="600" height="220" />
+                                            options={options1} width={8} height={3.5} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-12 px-0" >
-                                    <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 mx-2">
+                                <div className="col-4 px-0 mb-2" >
+                                    <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-0 px-2 ml-2 h-100">
+                                        <div className="campaign ct-charts px-3">
+                                        <h6 className="text-dark bold-normal py-1 ">Order Status </h6>
+                                            <div className="p-0" >
+                                            <Doughnut
+                                                 options={{ legend: {position : 'bottom'}}}
+                                                data={{
+                                                labels: [
+                                                    'Rejected',
+                                                    'Placed',
+                                                    'A.Approved',
+                                                    'M.Approved',
+                                                    'S.Approved',
+                                                    'Delivered',
+                                                ],
+                                                datasets: [
+                                                    {
+                                                        label: "Orders",
+                                                        backgroundColor: [
+                                                            '#3498db',
+                                                            '#3780b6',
+                                                            '#3772a1',
+                                                            '#356085',
+                                                            '#314f6a',
+                                                            '#2c3e50',
+
+                                                        ],
+                                                        data: this.countbytype(orders)
+                                                    }
+                                                ]
+                                            }}
+                                               height="6" width="7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-12 px-0 mt-2" >
+                                    <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3">
                                         {/* <h6 className="text-muted bold-normal px-2 mb-0">  2020  </h6> */}
-                                        <h5 className="text-dark bold-normal px-2 pt-1 pb-3 ">  Recent Orders </h5>
+                                        <h6 className="text-dark bold-normal px-3 py-1 ">  Recent Orders </h6>
                                         <div className="table-responsive px-2">
                                             <table className="table table-stripped">
                                                 <thead>
@@ -227,11 +264,12 @@ class Dashboard extends Component {
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
+                                </> }
                             </div>
                         </div>
                     </div>
-                    : ''}
+                   
             </div>
         );
     }
@@ -273,8 +311,19 @@ class Dashboard extends Component {
             return "Good Night! "
         }
     }
+
+    countbytype = (orders = []) => {
+        let data = [0,0,0,0,0,0]
+        orders.forEach( row => {
+            if(row.current_state <= 5 && row.current_state >= 0){
+                data[row.current_state] = data[row.current_state] + 1
+            }
+        })
+        console.log(data)
+        return data;
+    }
 }
-const cardstyle = "card border-0 shadow-sm rounded mt-3 bg-white py-3 d-flex flex-row"
+const cardstyle = "card border-0 shadow-sm rounded mt-2 bg-white py-2 d-flex flex-row"
 const options1 = {
     scaleShowGridLines: false,
     scaleGridLineColor: 'rgba(0,0,0,.05)',
@@ -302,6 +351,10 @@ const options1 = {
         yAxes: [{
             gridLines: {
                 display: false
+            },
+            ticks: {
+                beginAtZero: true,
+                precision: 0,
             }
         }]
     }
