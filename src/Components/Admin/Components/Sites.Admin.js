@@ -9,7 +9,7 @@ import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-s
 import { withRouter } from 'react-router-dom'
 import Loader from '../Loading'
 import { connect } from "react-redux";
-
+import { Link } from 'react-router-dom'
 
 class Sites extends Component {
     constructor() {
@@ -184,6 +184,7 @@ class Sites extends Component {
                                                     <th scope="col"><h6 className="header">Site Code</h6></th>
                                                     <th scope="col"><h6 className="header">Site Addreess</h6></th>
                                                     <th scope="col"><h6 className="header">Site Manager</h6></th>
+                                                    <th scope="col"><h6 className="header">Actions</h6></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -212,6 +213,13 @@ class Sites extends Component {
                  <td><h6 className="text-dark normal">{data_arry.site_code}</h6></td>
                  <td><h6 className="text-dark normal">{data_arry.address}</h6></td>
                  <td><h6 className="text-dark normal">{data_arry.site_manager.username}</h6></td>
+                 <td>
+                 <Link to={`/admin/sites/${data_arry._id}`}>
+                    <span className=" rounded py-1 px-2 bg-success text-white">
+                    <FontAwesomeIcon icon={faEye} className="mr-1"/> Details
+                    </span>
+                    </Link>
+                 </td>
             </tr>
         );
     }

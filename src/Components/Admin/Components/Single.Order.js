@@ -118,7 +118,7 @@ class SingleOrder extends Component {
             <div className="bg-light wd-wrapper">
                 <SideBar active={"orders"} />
                 <div className="wrapper-wx" >
-                    <div className="container-fluid" >
+                    <div className="container-fluid pb-2" >
                         <div className="row">
                             <div className="col-12">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
@@ -144,7 +144,7 @@ class SingleOrder extends Component {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2" >Site Manager Name</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={site.site_manager && site.site_manager.username}
@@ -154,7 +154,7 @@ class SingleOrder extends Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2" >Site Contact No</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={site.site_manager && site.site_manager.contact_number}
@@ -164,7 +164,7 @@ class SingleOrder extends Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label  mt-2 mb-2" >Site Location</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={site.address}
@@ -174,7 +174,7 @@ class SingleOrder extends Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2" >Site Code</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={site.site_code}
@@ -201,7 +201,7 @@ class SingleOrder extends Component {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2" >Supplier Name</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={supplier.name}
@@ -211,7 +211,7 @@ class SingleOrder extends Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2" >Supplier Contact No</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={supplier.phoneNo}
@@ -221,7 +221,7 @@ class SingleOrder extends Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label  mt-2 mb-2" >Email Address</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={supplier.email}
@@ -231,7 +231,7 @@ class SingleOrder extends Component {
                                             </div>
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2" >Address</h6>
-                                                <input style={{backgroundColor : '#fff'}}
+                                                <input style={{backgroundColor : '#fcfcfc'}}
                                                     type="text"
                                                     name="supliername"
                                                     value={supplier.address}
@@ -246,8 +246,8 @@ class SingleOrder extends Component {
                                 </div>
                             </div>
                             {/* ----------------------------------------------------------- */}
-                            <div className="col-9">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
+                            <div className="col-9 pb-3">
+                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2 h-100">
                                     <div className="card-header m-0 p-0 bg-white2" >
                                         <h6 className="text-dark bold-normal py-2 px-3 mb-0 form-label">
                                            Order Item Details
@@ -282,7 +282,35 @@ class SingleOrder extends Component {
                                         </table>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="col-3 pb-3">
+                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2 h-100">
+                                    <div className="card-header m-0 p-0 bg-white2" >
+                                        <h6 className="text-dark bold-normal py-2 px-3 mb-0 form-label">
+                                            Order Status Log
+                                        </h6>
+                                    </div>
+                                    <div className="table-responsive px-2">
+                                        <table className="table table-stripped">
+                                            <tbody>
+                                                {  item.state.map( row => (
+                                                    <tr>
+                                                        <td>{this.render_state(row)} 
+                                                        {row.note && row.note.length > 0 && 
+                                                        <h6 className="text-muted bold-normal small text-left  py-2 mb-0 mt-1">{row.note && row.note.length > 0 && row.note}</h6>}
+                                                        <h6 className="text-dark small text-left mb-0 mt-1">{moment(row.date).calendar()}</h6>
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                ))}
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div className="col-12 mb-2">
                                 {/* ------------------------------------ */}
                                 { auth.user.role == 2 && item.current_state == 1 &&  
                                 <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
@@ -359,32 +387,6 @@ class SingleOrder extends Component {
                                     </div>
                                 </div>}
                                 {/* ----------------------------------------------------- */}
-                            </div>
-                            <div className="col-3">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <div className="card-header m-0 p-0 bg-white2" >
-                                        <h6 className="text-dark bold-normal py-2 px-3 mb-0 form-label">
-                                            Order Status Log
-                                        </h6>
-                                    </div>
-                                    <div className="table-responsive px-2">
-                                        <table className="table table-stripped">
-                                            <tbody>
-                                                {  item.state.map( row => (
-                                                    <tr>
-                                                        <td>{this.render_state(row)} 
-                                                        {row.note && row.note.length > 0 && 
-                                                        <h6 className="text-muted bold-normal small text-left  py-2 mb-0 mt-1">{row.note && row.note.length > 0 && row.note}</h6>}
-                                                        <h6 className="text-dark small text-left mb-0 mt-1">{moment(row.date).calendar()}</h6>
-                                                        </td>
-                                                       
-                                                    </tr>
-                                                ))}
-                                               
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
                             </>
                             }

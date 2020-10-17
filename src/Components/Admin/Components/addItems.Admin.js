@@ -12,6 +12,7 @@ class AddItemsAdmin extends Component {
     constructor() {
         super();
         this.state = {
+            sup : '' ,
             isLoaded: false,
             supplierList:[],
             itemsList:[],
@@ -54,12 +55,7 @@ class AddItemsAdmin extends Component {
     }
 
     handleSelect = (event) => {
-        if (event.target.value.length > 0) {
-            let find = this.state.supplierList.find(e => e._id == event.target.value);
-            this.setState({ supplier: { id: find._id, name: find.name } })
-        } else {
-            this.setState({ supplier: {} })
-        }
+            this.setState({ sup : event.target.value })
     }
 
 
@@ -74,8 +70,7 @@ class AddItemsAdmin extends Component {
             item_name: this.state.item_name,
             description: this.state.description,
             price: this.state.price,
-            // supplierName:this.state.supplier,
-            password: Config.password,
+            supplierName : this.state.sup,
         }
         insertItem(data).then( result => {
             if(result.status == 200 ){
@@ -142,12 +137,11 @@ class AddItemsAdmin extends Component {
                                                     className="form-control" 
                                                     onChange={(e) => this.formValueChange(e)} required></input>
 
-                                                    {/* <h6 className="form-label py-2">Supplier *</h6>
-                                                        <select value={supplier.name} onChange={this.handleSelect}  className="form-control">
-                                                        <option value="">Select a Supplier</option>
-                                                    
-                                                        {supplierList.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
-                                                        </select> */}
+                                                <h6 className="form-label mb-2 mt-3">Supplier *</h6>
+                                                    <select value={this.state.sup} onChange={this.handleSelect}  className="form-control" required>
+                                                    <option value="">Select a Supplier</option>
+                                                    {supplierList.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+                                                    </select>
                                                
                                             </div>
                                             <div className="col-md-6">

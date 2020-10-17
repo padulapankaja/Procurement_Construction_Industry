@@ -5,6 +5,7 @@ import SiteManagerAdmin from '../Admin/Components/Sitemangers.Admin'
 import createUser from '../Admin/Components/createUser.Admin'
 import SuppliersAdmin from '../Admin/Components/Suplier.Admin'
 import OrderManagement from '../Admin/Components/Order.Admin'
+import SingleSite from '../Admin/Components/single.site'
 import SingleOrder from '../Admin/Components/Single.Order'
 import SitesManagment from '../Admin/Components/Sites.Admin'
 import ItemsManagement from '../Admin/Components/Items.Admin'
@@ -50,6 +51,12 @@ let indexRoutes = [
     path: "/admin/sites",
     name: "SitesManagment",
     component: SitesManagment,
+    exact: true,
+  },
+  {
+    path: "/admin/sites/:id",
+    name: "SingleSite",
+    component: SingleSite,
     exact: true,
   },
   {

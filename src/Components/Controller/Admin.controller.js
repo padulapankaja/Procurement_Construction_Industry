@@ -16,6 +16,8 @@ class Admin {
             all_sites: "/api/sites/get_all",
             all_stats: "/api/stats/all",
             by_month: "/api/stats/latest",
+            get_order_by_site_id : "/api/orders/getbysite",
+            get_single_site : "/api/sites/getone",
         };
     }
     // sign in
@@ -124,6 +126,26 @@ class Admin {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await Axios.get(`${Config.host}${Config.port}${this.api.by_month} `);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+    get_order_by_site_id = (id) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_order_by_site_id}/${id}`);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+    get_single_site = (id) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.get_single_site}/${id}`);
                 resolve({ code: 200, data: result.data });
             } catch (err) {
                 reject({ code: 0, error: err });

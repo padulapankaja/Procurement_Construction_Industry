@@ -20,12 +20,12 @@ class ItemsAdmin extends Component {
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.load_items_data();
         
     }
 
-    load_items_data = async () => {
+    load_items_data =  () => {
         get_all_items().then( results => {
             this.setState({
                 isLoaded: true,
@@ -97,19 +97,24 @@ class ItemsAdmin extends Component {
             
             
             <td>
-                <span onClick={() => this.deleteItem(item)} className="badge badge-danger  click font-weight-bold ml-2">Remove</span>
+                <span onClick={() => this.onPressDeleteItem(item)} className="badge badge-danger  click font-weight-bold ml-2">Remove</span>
             </td>
             </tr>
         );
     };
 
+    onPressDeleteItem = (item) => {
+        Config.setDeleteConfirmAlert( 'Delete Item' , 'Are you sure you want to delete this item?',
+        () => this.deleteItem(item) , () => console.log('canceled'))
 
+    }
     deleteItem = item => {
         const id = item._id;
         deleteItem(id).then( result => {
+            this.load_items_data();
             if(result.status == 200 ){
                 Config.setToast("Item Deleted Successfully");
-                this.load_items_data();
+                
                 
             }else{
                 Config.setToast(result.message);
