@@ -12,6 +12,8 @@ class OrderAdmin extends Component {
     constructor() {
         super();
         this.state = {
+            email:'',
+            name:''
 
 
         };
@@ -44,11 +46,12 @@ class OrderAdmin extends Component {
                             </div>
                             <div className="col-12">
                                 <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
+                                    <form className=" py-2  px-3 ordersearch" onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <h6 className="form-label py-2">Supplier Name</h6>
                                                 <input
+                                                    id="s_name"
                                                     type="text"
                                                     name="name"
                                                     className="form-control" ></input>
@@ -56,7 +59,8 @@ class OrderAdmin extends Component {
                                             <div className="col-md-6">
                                                 <h6 className="form-label py-2">Site Manager Name</h6>
                                                 <input
-                                                    type="email"
+                                                   id="s_site_manager"
+                                                    type="text"
                                                     name="email"
                                                     className="form-control" >
                                                 </input>

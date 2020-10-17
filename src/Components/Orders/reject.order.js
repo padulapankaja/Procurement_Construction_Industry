@@ -42,7 +42,7 @@ class RejectedOrders extends Component {
                                     Rejected  Orders
                                 </h5>
                             </div>
-                            <div className="col-12">
+                            <div className="col-12 pre_orders_us">
                                 <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
                                     <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">

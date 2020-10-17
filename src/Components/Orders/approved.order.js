@@ -40,7 +40,7 @@ class CompletedOrders extends Component {
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <div className="row">
-                            <div className="col-12">
+                            <div className="col-12 approved_orders_us">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
                                     Completed Orders {orders.length > 0 &&
                                         <span className="mx-1 badge badge-primary">{("0" + (orders.length)).slice(-2)}</span>}

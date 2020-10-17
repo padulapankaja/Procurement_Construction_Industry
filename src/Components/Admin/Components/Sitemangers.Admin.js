@@ -9,7 +9,6 @@ import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-s
 import { withRouter } from 'react-router-dom'
 import Loader from '../Loading'
 import { Modal } from 'react-bootstrap';
-import { connect } from "react-redux";
 
 class SiteManagersAdmin extends Component {
     constructor() {
@@ -44,7 +43,7 @@ class SiteManagersAdmin extends Component {
 
     get_all_site_managers = async () => {
         const res = await ADMIN.get_all_site_users_details()
-        console.log(res);
+        console.log(res.data.data);
         this.setState({
             site_managers_arry: res.data.data.filter( i => i.role != 0)
         })
@@ -62,7 +61,7 @@ class SiteManagersAdmin extends Component {
 
     render() {
         const { name, contactNumber, email, site_code, site_location, viewUser } = this.state
-        const auth_role = this.props.auth.user.role;
+       
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"sitemanagers"} />
@@ -78,7 +77,7 @@ class SiteManagersAdmin extends Component {
                             </div>
 
                             {/* ----------------------------------------------------------- */}
-                            <div className="col-12">
+                            <div className="col-12 iser_i">
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                  
                                     <div className="table-responsive px-3">
@@ -171,7 +170,5 @@ class SiteManagersAdmin extends Component {
     
 }
 
-const mapStateToProps = (state) => ({
-    auth: state.auth || {},
-});
-export default connect(mapStateToProps, null)(withRouter(SiteManagersAdmin));
+
+export default SiteManagersAdmin;
