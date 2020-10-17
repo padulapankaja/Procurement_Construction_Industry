@@ -21,13 +21,16 @@ class PendingOrders extends Component {
     componentDidMount(){
         ADMIN.get_all_orders()
         .then( result => {
+            console.log(result.data.data);
             this.setState({ loading : false ,
                 orders : result.data.data.filter(i => i.current_state != 0 && i.current_state != 5) })
         })
+
         .catch( err => {
             console.log(err);
             this.setState({loading : false})
         })
+        
     }
 
     render() {
@@ -83,7 +86,7 @@ class PendingOrders extends Component {
                                 </div>
                             </div> */}
                             {/* ----------------------------------------------------------- */}
-                            <div className="col-12">
+                            <div className="col-12 pending_orders_us">
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">

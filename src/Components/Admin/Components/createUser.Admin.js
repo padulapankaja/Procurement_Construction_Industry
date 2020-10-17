@@ -1,4 +1,4 @@
-      /*  eslint-disable */
+/*  eslint-disable */
 import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
@@ -63,13 +63,8 @@ class createUser extends Component {
             role_number = 2
         else if (this.state.selectedOption.value == "Management(Admin)")
             role_number = 3
-
-
-
         console.log(this.state.selectedOption.value);
         console.log(role_number);
-
-
         var data = {
             username: this.state.name,
             contact_number: this.state.contactNumber,
@@ -79,7 +74,6 @@ class createUser extends Component {
             role: role_number
         }
         console.log(data);
-
         ADMIN.register_site_manager(data).then(result => {
             Config.setToast("Successfully Registed")
             this.get_all_site_managers()
@@ -93,9 +87,7 @@ class createUser extends Component {
             Config.setErrorToast("Someting went wrong")
             this.props.history.push("/admin/sitemanagers");
         })
-
     }
-
     clear = () => {
         this.setState({
             name: '',
@@ -123,42 +115,43 @@ class createUser extends Component {
             viewUser: singleUser[0]
         })
     }
-
     render() {
         const { name, contactNumber, email, site_code, site_location, viewUser, selectedOption } = this.state
         return (
             <div className="bg-light wd-wrapper">
                 <SideBar active={"CreateUser"} />
-
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         {/* <Loader show={this.state.loading} /> */}
                         <div className="row">
                             <div className="col-12">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
-                                   Create New Users
+                                    Create New Users
                                 </h6>
                             </div>
                             <div className="col-12" >
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
-                                    <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
+                                    <form className=" py-2  px-3 createUsers" onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-6">
                                                 <h6 className="form-label mb-2 mt-2">Username *</h6>
                                                 <input
+                                                    id="user_name"
                                                     type="text"
                                                     name="name"
                                                     placeholder="Enter Username"
                                                     value={name}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                            
-                                                    <h6 className="form-label mb-2 mt-3">Designation *</h6>
-                                                    <Select name="designation"
-                                                        placeholder={'Select Designation'}
-                                                        value={selectedOption}
-                                                        onChange={this.handleChange}
-                                                        options={options}
-                                                    />
+
+                                                <h6 className="form-label mb-2 mt-3">Designation *</h6>
+                                                <Select name="designation"
+                                                    id="user_designation"
+                                                    placeholder={'Select Designation'}
+                                                    value={selectedOption}
+                                                    onChange={this.handleChange}
+                                                    options={options}
+                                                    required
+                                                />
                                                 <h6 className="form-label mb-2 mt-3">Password  *</h6>
                                                 <input
                                                     type="password"
@@ -167,10 +160,9 @@ class createUser extends Component {
                                                     className="form-control" disabled></input>
                                             </div>
                                             <div className="col-md-6">
-
                                                 <h6 className="form-label mb-2 mt-2">Email Address *</h6>
-
                                                 <input
+                                                    id="user_email"
                                                     type="email"
                                                     name="email"
                                                     placeholder="Enter Email Address"
@@ -179,23 +171,22 @@ class createUser extends Component {
 
                                                 <h6 className="form-label mb-2 mt-3">Contact No*</h6>
                                                 <input
+                                                    id="user_contact"
                                                     type="text"
                                                     name="contactNumber"
                                                     placeholder="Enter Phone No"
                                                     value={contactNumber}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} required></input>
-                                               <br></br>
-                                                    <div className="d-flex mt-3">
+                                                <br></br>
+                                                <div className="d-flex mt-3">
                                                     <button type="submit" className="font-weight-bold px-2 btn btn-dark  btn-sm bold-normal "   >
-                                                            Create User
+                                                        Create User
                                                     </button>
-                                                        <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
-                                                            Cancel
+                                                    <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
+                                                        Cancel
                                                     </button>
-                                                      
-                                                    </div>
+                                                </div>
                                             </div>
-                                           
                                             <div className="col-md-6">
                                                 {/* <h6 className="form-label py-2 ">Site Location *</h6> */}
                                                 <input
@@ -213,10 +204,8 @@ class createUser extends Component {
                                                     placeholder="GL0156"
                                                     value={site_code}
                                                     className="form-control" onChange={(e) => this.formValueChange(e)} hidden></input>
-
                                             </div>
                                             <div className="col-md-12 mt-4">
-                                                
                                             </div>
                                         </div>
                                     </form>

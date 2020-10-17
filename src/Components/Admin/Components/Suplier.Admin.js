@@ -1,4 +1,4 @@
-      /*  eslint-disable */
+/*  eslint-disable */
 import React, { Component } from 'react';
 import SideBar from '../../Common/Sidebar'
 import Config from '../../Controller/Config.controller'
@@ -12,7 +12,7 @@ class SupliersAdmin extends Component {
     constructor() {
         super();
         this.state = {
-            loading : true ,
+            loading: true,
             addSuplierState: false,
             name: '',
             contactNumber: '',
@@ -32,9 +32,9 @@ class SupliersAdmin extends Component {
         console.log(res);
         this.setState({
             suppliers_arry: res.data.data,
-            loading : false
+            loading: false
         })
-       
+
     }
     change_toggle = () => {
         if (this.state.addSuplierState) {
@@ -83,18 +83,19 @@ class SupliersAdmin extends Component {
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <div className="row">
-                        <div className="col-12">
+                            <div className="col-12">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
-                                Supplier Management
+                                    Supplier Management
                                 </h6>
                             </div>
-                            { role == 3 && <div className="col-12" >
+                            {role == 3 && <div className="col-12" >
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
-                                    <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
+                                    <form className=" py-2  px-3 supliers" onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2">Name *</h6>
                                                 <input
+                                                    id="s_name"
                                                     type="text"
                                                     name="name"
                                                     placeholder="Enter Supplier Name"
@@ -103,6 +104,7 @@ class SupliersAdmin extends Component {
 
                                                 <h6 className="form-label mt-3 mb-2">Email *</h6>
                                                 <input
+                                                    id="s_email"
                                                     type="email"
                                                     name="email"
                                                     placeholder="Enter Supplier Email"
@@ -111,6 +113,7 @@ class SupliersAdmin extends Component {
 
                                                 <h6 className="form-label mt-3 mb-2">Address *</h6>
                                                 <input
+                                                    id="s_address"
                                                     type="text"
                                                     name="address"
                                                     placeholder="Enter Supplier Address"
@@ -121,6 +124,7 @@ class SupliersAdmin extends Component {
                                             <div className="col-md-6">
                                                 <h6 className="form-label mt-2 mb-2">Contact Number *</h6>
                                                 <input
+                                                    id="c_number"
                                                     type="number"
                                                     name="contactNumber"
                                                     placeholder="Enter Contact No"
@@ -134,25 +138,25 @@ class SupliersAdmin extends Component {
                                                     className="form-control" disabled></input>
                                                 <br></br>
                                                 <div className="d-flex mt-3">
-                                                   
+
                                                     <button type="submit" className="font-weight-bold px-2 btn btn-dark  btn-sm bold-normal"   >
                                                         Add Supplier
                                                 </button>
-                                                <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
+                                                    <button type="reset" onClick={() => this.clear()} className="font-weight-bold px-2 ml-2  btn btn-secondary  btn-sm bold-normal" >
                                                         Cancel
                                                 </button>
+                                                </div>
                                             </div>
-                                            </div>
-                                           
+
                                         </div>
                                     </form>
                                 </div>
                                 {/* <button onClick={() => this.getAllManagers()}>Vee</button> */}
-                            </div> }
+                            </div>}
                             {/* ----------------------------------------------------------- */}
                             <div className="col-12">
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
-                                 
+
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">
                                             <thead>
