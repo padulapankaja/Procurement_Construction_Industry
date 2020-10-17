@@ -1,92 +1,93 @@
-      /*  eslint-disable */
+/*  eslint-disable */
 import React, { Component } from 'react';
-import SideBar from '../Common/Sidebar'
-import Config from '../Controller/Config.controller'
-import ADMIN from '../Controller/Admin.controller'
+import SideBar from '../../Common/Sidebar'
+import Config from '../../Controller/Config.controller'
+import ADMIN from '../../Controller/Admin.controller'
+import {gettotal , render_state , current_state , state_color} from '../../Controller/Util.controller'
 import moment from 'moment'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPenAlt, faEye, faEnvelope, faBan } from '@fortawesome/free-solid-svg-icons'
-import {gettotal , render_state , current_state , state_color} from '../Controller/Util.controller'
+import { withRouter } from 'react-router-dom'
+import Loader from '../Loading'
+import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
+import Axios from 'axios';
+import _ from 'lodash'
 
-class PendingOrders extends Component {
-    constructor() {
-        super();
+export default class Sites extends Component {
+    
+    constructor(props) {
+        super(props);
         this.state = {
-            orders : [],
-            loading : true,
+           id : props.match.params.id ,
+           site : {},
+           loading : true,
+           orders : []
         };
+    
     }
 
     componentDidMount(){
-        ADMIN.get_all_orders()
+        ADMIN.get_order_by_site_id(this.props.match.params.id)
         .then( result => {
-            console.log(result.data.data);
-            this.setState({ loading : false ,
-                orders : result.data.data.filter(i => i.current_state != 0 && i.current_state != 5) })
+             this.setState({orders : result.data.data  })
+             return ADMIN.get_single_site(this.props.match.params.id)
         })
-
+        .then( result => {
+             this.setState({ loading : false , site : result.data.data })
+        })
         .catch( err => {
-            console.log(err);
-            this.setState({loading : false})
+            console.log(err)
+            this.setState({ loading : false })
         })
-        
     }
 
+
     render() {
-        const { orders , loading} = this.state
+        const {site , id , orders , loading} = this.state
+
         return (
             <div className="bg-light wd-wrapper">
-                <SideBar active={"Pending"} />
+                <SideBar active={"sites"} />
                 <div className="wrapper-wx" >
                     <div className="container-fluid" >
                         <div className="row">
                         <div className="col-12">
                                 <h6 className="text-dark bold-normal py-3 bg-white shadow-sm px-3 mt-3 rounded">
-                                  Pending Orders {orders.length > 0 && 
-                                  <span className="mx-1 badge badge-primary">{("0" + (orders.length)).slice(-2)}</span>}
+                                    Site Details 
                                 </h6>
                             </div>
-                            {/* <div className="col-12">
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pb-2">
-                                    <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
+                           
+                            <div className="col-12">
+                                <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
+                                    <form className=" py-2  px-3 ">
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2">Supplier Name</h6>
+                                                <h6 className="form-label mb-2 mt-2">Address</h6>
                                                 <input
                                                     type="text"
-                                                    name="name"
-                                                    className="form-control" ></input>
+                                                    name="address"
+                                                    value={site.address}
+                                                    readOnly
+                                                    className="form-control"></input>
+
                                             </div>
                                             <div className="col-md-6">
-                                                <h6 className="form-label py-2">Site Manager Name</h6>
+                                            <h6 className="form-label mb-2 mt-2">Site Code</h6>
                                                 <input
-                                                    type="email"
-                                                    name="email"
-                                                    className="form-control" >
-                                                </input>
+                                                    type="text"
+                                                    name="sitecode"
+                                                    value={site.site_code}
+                                                    readOnly
+                                                    className="form-control"></input>
                                             </div>
-                                            <div className="col-md-4 mt-3">
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <button type="reset" className=" btn btn-secondary   bold-normal" style={{ width: '100%' }} >
-                                                            Reset
-                                                </button>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <button type="submit" className=" btn btn-dark   bold-normal" style={{ width: '100%' }}>
-                                                            Search
-                                                    </button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                           
                                         </div>
                                     </form>
                                 </div>
-                            </div> */}
+                            </div>
                             {/* ----------------------------------------------------------- */}
-                            <div className="col-12 pending_orders_us">
+                            <div className="col-12">
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
                                     <div className="table-responsive px-2">
                                         <table className="table table-stripped">
@@ -100,10 +101,7 @@ class PendingOrders extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {orders && orders
-                                                        .sort((a,b) => parseInt(a.current_state) -  parseInt(b.current_state))
-                                                        .map((item,i) => this.display(item,i))
-                                                }
+                                                { !loading && orders && orders.map((item,i) => this.display(item,i))  }
 
                                                 {loading &&
                                                     <td colSpan={5}><h6 className="text-dark normal text-center py-2">Loading...</h6></td>
@@ -114,6 +112,7 @@ class PendingOrders extends Component {
                                 </div>
                                 
                             </div>
+                            {/* ------------------------------------------------------------------------------------------ */}
                         </div>
                     </div>
                 </div>
@@ -141,8 +140,5 @@ class PendingOrders extends Component {
             </tr>
         );
     }
-
-
-  
 }
-export default PendingOrders;
+

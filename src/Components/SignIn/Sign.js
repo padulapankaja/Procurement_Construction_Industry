@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import '../asserts/signin/css/main.css'
 import '../asserts/signin/css/util.css'
-import img_1 from '../asserts/signin/img/img-01.png'
+import img_1 from '../asserts/signin/img/img-03.png'
 import { setCurrentUser } from "../Redux/Action/authAction";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -55,17 +55,18 @@ class SignIn extends Component {
     render() {
         const { username, password } = this.state
         return (
-            <div className="container-fluid">
+            <div className="container-fluid bg-light" >
                 <div className="limiter">
                     <div className="container-login100">
-                        <div className="wrap-login100">
+                        <div className="wrap-login100 bg-light">
                             <div className="login100-pic js-tilt" data-tilt>
                                 <img src={img_1} alt="IMG" />
                             </div>
-                            <form className="login100-form validate-form" id="signin" onSubmit={(e) => this.onSubmit(e)}>
-                                <span className="login100-form-title">
-                                Procurement Sign In
-                            </span>
+                            <form className="login100-form validate-form" onSubmit={(e) => this.onSubmit(e)}>
+                                <span className="login100-form-title font-weight-bold">
+                                Welcome to Login Portal<br></br>
+                                <span className="text-muted small">Procurement Coop.</span>
+                                </span>
                                 <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                                     <input className="input100" type="text" name="username" value={username} placeholder="Enter Username" onChange={(e) => this.formValueChange(e)} required />
                                     <span className="focus-input100"></span>
@@ -83,7 +84,7 @@ class SignIn extends Component {
                                 <div className="container-login100-form-btn">
                                     <button className="login100-form-btn">
                                         Login
-                                </button>
+                                    </button>
                                 </div>
                             </form>
                         </div>

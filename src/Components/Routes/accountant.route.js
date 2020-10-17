@@ -1,5 +1,4 @@
 
-
 import Dashboard from '../Admin/Dashboard'
 import SiteManagerAdmin from '../Admin/Components/Sitemangers.Admin'
 import SuppliersAdmin from '../Admin/Components/Suplier.Admin'
@@ -11,7 +10,7 @@ import AddItem from '../Admin/Components/addItems.Admin';
 import ApprovedOrders from '../Orders/approved.order';
 import RejectedOrders from '../Orders/reject.order';
 import PendingOrders from '../Orders/pending.order';
-
+import SingleSite from '../Admin/Components/single.site'
 
 let indexRoutes = [
 
@@ -43,6 +42,12 @@ let indexRoutes = [
     path: "/admin/sites",
     name: "SitesManagment",
     component: SitesManagment,
+    exact: true,
+  },
+  {
+    path: "/admin/sites/:id",
+    name: "SingleSite",
+    component: SingleSite,
     exact: true,
   },
   {
