@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import RejectOrders from '../Components/Orders/reject.order'
 import AdminController from '../Components/Controller/Admin.controller'
+
 describe('All Reject Orders  Component', () => {
     it('Should be render without throwing an error', () => {
         expect(shallow(<RejectOrders />).find('div.pre_orders_us').exists()).toBe(true)
