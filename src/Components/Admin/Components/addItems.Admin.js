@@ -116,11 +116,12 @@ class AddItemsAdmin extends Component {
                             </div>
                             <div className="col-12" >
                                 <div className="card border-0 shadow-sm rounded mt-2 bg-white pb-2">
-                                    <form className=" py-2  px-3 " onSubmit={(e) => this.onSubmit(e)}>
+                                    <form className=" py-2  px-3 additems"  onSubmit={(e) => this.onSubmit(e)}>
                                         <div className="row">
                                             <div className="col-md-6">
                                             <h6 className="form-label mb-2 mt-2">Item ID *</h6>
                                                 <input
+                                                    id="itemId"
                                                     type="text"
                                                     name="item_id"
                                                     placeholder="Enter Item ID"
@@ -130,6 +131,7 @@ class AddItemsAdmin extends Component {
 
                                                 <h6 className="form-label mb-2 mt-3">Description *</h6>
                                                 <input
+                                                    id="item_description"
                                                     type="text"
                                                     name="description"
                                                     placeholder="Enter Small Description"
@@ -147,6 +149,7 @@ class AddItemsAdmin extends Component {
                                             <div className="col-md-6">
                                                 <h6 className="form-label mb-2 mt-2">Item Name *</h6>
                                                 <input
+                                                    id="item_name"
                                                     type="text"
                                                     name="item_name"
                                                     placeholder="Enter Item Name"
@@ -156,6 +159,7 @@ class AddItemsAdmin extends Component {
 
                                                    <h6 className="form-label mb-2 mt-3">Price *</h6>
                                                 <input
+                                                   id="item_price"
                                                     type="text"
                                                     name="price"
                                                     placeholder="Enter Item Price"

@@ -18,6 +18,7 @@ class Admin {
             by_month: "/api/stats/latest",
             get_order_by_site_id : "/api/orders/getbysite",
             get_single_site : "/api/sites/getone",
+            recent: "/api/stats/recent",
         };
     }
     // sign in
@@ -116,6 +117,16 @@ class Admin {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await Axios.get(`${Config.host}${Config.port}${this.api.all_stats}`);
+                resolve({ code: 200, data: result.data });
+            } catch (err) {
+                reject({ code: 0, error: err });
+            }
+        })
+    }
+    get_recent_details = () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await Axios.get(`${Config.host}${Config.port}${this.api.recent} `);
                 resolve({ code: 200, data: result.data });
             } catch (err) {
                 reject({ code: 0, error: err });

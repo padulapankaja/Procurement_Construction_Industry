@@ -1,4 +1,4 @@
-      /*  eslint-disable */
+/*  eslint-disable */
 import React, { Component } from 'react';
 import SideBar from '../Common/Sidebar'
 import { Line as LineChart, Bar, Doughnut } from 'react-chartjs-2';
@@ -15,7 +15,6 @@ import img_construction from '../asserts/img/construction.png'
 import Config from '../Controller/Config.controller'
 import AdminController from '../Controller/Admin.controller'
 import { gettotal, render_state, current_state, state_color } from '../Controller/Util.controller'
-
 class Dashboard extends Component {
     constructor() {
         super();
@@ -24,56 +23,53 @@ class Dashboard extends Component {
             loading: true,
             monthwise: null,
             orders: [],
+            dates: [],
+            no_of_orders: []
         };
-
-
     }
-
-
     componentDidMount = async () => {
-
         await AdminController.get_all_stats().then(response => {
-            console.log(response.data.data);
             this.setState({
                 counts: response.data.data,
                 loading: false
             })
-            console.log(this.state.counts);
         })
         this.get_data_filteration()
-
     }
-
     get_data_filteration = () => {
         this.setState({
             loading: true
         })
-        AdminController.get_all_stats_by_months().then(response => {
-            console.log(response.data.data);
-            this.setState({
-                monthwise: response.data.data,
-                loading: false
-            })
-            console.log(this.state.monthwise);
-        })
-
+        // AdminController.get_all_stats_by_months().then(response => {
+        //     this.setState({
+        //         monthwise: response.data.data,
+        //         loading: false
+        //     })
+        // })
         AdminController.get_all_orders()
             .then(result => {
                 this.setState({
                     loading: false,
                     orders: result.data.data.filter(i => i.current_state != 0 && i.current_state != 5)
                 })
-
-                console.log("------------------");
-                console.log(this.state.orders)
             })
             .catch(err => {
-                console.log(err);
                 this.setState({ loading: false })
             })
-
+        AdminController.get_recent_details().then(response => {
+            this.setState({
+                loading: false,
+                dates: response.data.data.map(function (val) {
+                    return val.date;
+                }),
+                no_of_orders: response.data.data.map(function (val) {
+                    return val.numberoforders;
+                }),
+            })
+        }).catch(err => {
+            this.setState({ loading: false })
+        })
     }
-
     render() {
         const { counts, orders, loading } = this.state
         return (
@@ -157,45 +153,21 @@ class Dashboard extends Component {
                                 </div>
                                 <div className="col-7 px-0" >
                                     <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 mx-2">
-                                        {/* <h6 className="text-muted bold-normal px-2 mb-0">  2020  </h6> */}
                                         <h5 className="text-dark bold-normal px-2 pt-1 pb-3 ">  Orders </h5>
                                         <LineChart data={{
-                                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septhmber', 'October', 'November', 'December'],
+                                            labels: this.state.dates,
                                             datasets: [
                                                 {
                                                     label: "Revenue",
                                                     backgroundColor: 'rgba(26, 188, 156,0.5)',
                                                     borderColor: 'rgba(39, 174, 96,0.4)',
-                                                    data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27]
+                                                    data: this.state.no_of_orders
                                                 }
                                             ]
                                         }}
                                             options={options2} width={12} height={3} />
                                     </div>
                                 </div>
-                                {/* <div className="col-6 px-0" >
-                                <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 px-2 mx-2">
-                                    <div className="campaign ct-charts px-3">
-
-                                        <h6 className="text-muted bold-normal  mt-2 mb-3">  Supplier Registration  </h6>
-                                        <Bar data={{
-                                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                                            datasets: [
-                                                {
-                                                    label: "Users",
-                                                    backgroundColor: 'rgba(220, 231, 117,0.5)',
-                                                    borderColor: 'rgba(220, 231, 117,1.0)',
-                                                    borderWidth: 1,
-                                                    hoverBackgroundColor: 'rgba(220, 231, 117,0.4)',
-                                                    hoverBorderColor: 'rgba(220, 231, 117,1)',
-                                                    data: [65, 59, 80, 81, 56, 55, 40]
-                                                }
-                                            ]
-                                        }}
-                                            options={options1} width="600" height="220" />
-                                    </div>
-                                </div>
-                            </div> */}
                                 <div className="col-5 px-0" >
                                     <div className="card border-0 shadow-sm rounded mt-3 bg-white pt-2 pb-3 px-2">
                                         <div className="campaign ct-charts px-3">
@@ -245,7 +217,7 @@ class Dashboard extends Component {
                                                 <tbody>
                                                     {orders && orders
                                                         .sort((a, b) => parseInt(a.current_state) - parseInt(b.current_state))
-                                                        .map((item, i) => this.display(item, i)).splice(0,5)
+                                                        .map((item, i) => this.display(item, i)).splice(0, 5)
                                                     }
 
                                                     {loading &&
@@ -375,8 +347,6 @@ const options2 = {
         }]
     }
 }
-
-
 const mapStateToProps = (state) => ({
     auth: state.auth || {},
 });

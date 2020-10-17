@@ -67,7 +67,6 @@ class SignIn extends Component {
                                 Welcome to Login Portal<br></br>
                                 <span className="text-muted small">Procurement Coop.</span>
                                 </span>
-                               
                                 <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                                     <input className="input100" type="text" name="username" value={username} placeholder="Enter Username" onChange={(e) => this.formValueChange(e)} required />
                                     <span className="focus-input100"></span>
